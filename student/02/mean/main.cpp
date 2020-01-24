@@ -1,10 +1,10 @@
 #include <iostream>
 using namespace std;
 
-float mean ( int count_number)
+int mean ( int count_number)
 {
   int i = 1;
-  int sum = 0;
+  float sum = 0;
   while ( i < count_number + 1) {
     cout << "Input " << i << ". Number: ";
     float num;
@@ -12,7 +12,14 @@ float mean ( int count_number)
     sum = sum + num;
     i ++;
   }
-  return sum;
+  if (count_number == 0) {
+      cout << "Cannot count mean value from 0 numbers" << endl;
+  }
+  else {
+    cout << "Mean value of the given numbers is " << sum / count_number << endl;
+  }
+
+  return 0;
 }
 // Write here a function counting the mean value
 
@@ -23,13 +30,6 @@ int main()
     int count_number;
     cin >> count_number;
 
-    if (count_number == 0) {
-      cout << "Cannot count mean value from 0 numbers" << endl;
-    }
-    else {
-      float sum = 0;
-      sum = mean (count_number);
-      cout << "Mean value of the given numbers is " << sum / count_number << endl;
-    }
+    mean (count_number);
     return 0;
 }
