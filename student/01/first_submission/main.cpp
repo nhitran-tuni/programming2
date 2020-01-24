@@ -13,7 +13,7 @@ int main()
 
     std::cout << "Pleased to meet you, " << name << "!" << std::endl;
 
-    std::cout << "In your next birthday you'll be " << age +1 << " year olds!" << std::endl;
+    std::cout << "In your next birthday you'll be " << age +1 << " year old!" << std::endl;
 
     return EXIT_SUCCESS;
 }
