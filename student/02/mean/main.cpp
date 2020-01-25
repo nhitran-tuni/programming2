@@ -7,7 +7,7 @@ void mean ( int count_number)
   float sum = 0.0;
 
   while ( i < count_number + 1) {
-    cout << "Input " << i << ". Number: ";
+    cout << "Input " << i << ". number: ";
     float num;
     cin >> num;
     sum = sum + num;
