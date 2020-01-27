@@ -21,7 +21,7 @@ int main()
     cout << "Enter the number of drawn balls: ";
     cin >> drawn;
 
-    if (ball <=0 || drawn <0) {
+    if (ball <= 0) {
         cout << "The number of balls must be a positive number." << endl;
     }
     else {
