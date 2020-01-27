@@ -57,4 +57,6 @@ int main()
             cout << "Encrypted text: " << result << endl;
         }
     }
+    return 0;
 }
+
