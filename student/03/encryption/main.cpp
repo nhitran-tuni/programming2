@@ -40,13 +40,16 @@ int main()
 
   if (key.length() != 26) {
       cout << "Error! The encryption key must contain 26 characters." << endl;
+      return EXIT_FAILURE;
   }
   else if (repeat == 0) {
       cout << "Error! The encryption key must contain all alphabets a-z." << endl;
+      return EXIT_FAILURE;
   }
   else for(int i = 0; i < 26; i++){
       if (isupper(key.at(i))) {
           cout << "Error! The encryption key must contain only lower case characters." << endl;
+          return EXIT_FAILURE;
           break;
       }
       else{
