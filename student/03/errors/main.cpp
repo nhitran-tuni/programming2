@@ -72,20 +72,20 @@ int main() {
         }
 
         ++guesses_used;
-    }
+        }
 
-    if ( not is_word_already_guessed(secret_word, guessed_letters) ) {
-        cout << endl
-             << "Guesses expired!"
-             << endl;
+        if ( not is_word_already_guessed(secret_word, guessed_letters) ) {
+            cout << endl
+                 << "Guesses expired!"
+                 << endl;
 
-    } else {
+        } else {
 
-        cout << endl
-             << "Right guess. You used " << guesses_used
-             << " guesses!"
-             << endl;
-    }
+            cout << endl
+                 << "Right guess. You used " << guesses_used
+                 << " guesses!"
+                 << endl;
+        }
 }
 
 void clean_screen() {
