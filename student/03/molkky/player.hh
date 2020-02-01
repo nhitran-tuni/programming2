@@ -7,7 +7,7 @@ private:
     std::string name_;
     int _score;
 public:
-    Player (std::string name, int _score = 0);
+    Player (std::string name);
     void add_points(int pst);
     bool has_won();
     int get_points();

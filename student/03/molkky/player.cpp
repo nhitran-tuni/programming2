@@ -1,6 +1,6 @@
 #include "player.hh"
 
-Player::Player (std::string name, int _score):
+Player::Player (std::string name):
     name_(name)
 {}
 
