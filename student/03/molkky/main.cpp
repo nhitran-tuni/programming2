@@ -3,44 +3,6 @@
 #include <iostream>
 #include <string>
 
-class Player {
-private:
-    std::string name_;
-    int _score;
-public:
-    Player (std::string name, int score = 0);
-    void add_points(int pst);
-    bool has_won();
-    int get_points();
-    const std::string get_name() { return name_;}
-
-};
-
-Player::Player (std::string name, int score):
-    name_(name), _score(score)
-{}
-
-void Player::add_points(int pst) {
-    _score += pst;
-    if(_score > 50) {
-        _score = 25;
-    }
-}
-
-bool Player::has_won() {
-    if (_score == 50){
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-
-int Player::get_points() {
-    return _score;
-}
-
-
 int main()
 {
     Player player1 = Player("Matti");
@@ -48,7 +10,6 @@ int main()
     Player* in_turn = 0;
 
     int turn = 1;
-    int score = 0;
 
     while (true)
     {
