@@ -1,8 +1,9 @@
 #include "player.hh"
 
-Player::Player (std::string name):
-    name_(name)
-{}
+Player::Player (std::string name){
+    name_ = name ;
+    _score = 0;
+}
 
 void Player::add_points(int pst) {
     _score += pst;
@@ -13,10 +14,10 @@ void Player::add_points(int pst) {
 
 bool Player::has_won() {
     if (_score == 50){
-        return true;
+        return 1;
     }
     else {
-        return false;
+        return 0;
     }
 }
 
