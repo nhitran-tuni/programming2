@@ -17,66 +17,73 @@ void read_integers(std::vector< int >& ints, int count)
 // TODO: Implement your solution here
 bool same_values(std::vector <int>& ints)
 {
-    for (int i = 0; i < ints.size() - 1; ++i)
+    int size = ints.size();
+    bool check = 1;
+    for (int i = 0; i < size - 1; ++i)
     {
-        for (int j = i + 1; ints.size(); ++j)
+        for (int j = i + 1; j < size; ++j)
         {
             if (ints.at(i) != ints.at(j))
             {
-                return 0;
+                check = 0;
                 break;
-            } else
-                return 1;
+            }
         }
     }
+    return check;
 }
 
 bool is_ordered_non_strict_ascending(std::vector <int>& ints)
 {
-    for (int i = 0; i <= ints.size() - 2; ++i)
+    int size = ints.size();
+    bool check = true;
+    for (int i = 0; i <= size - 2; ++i)
     {
         if (ints.at(i) > ints.at (i+1))
         {
-            return 0;
+            check = false;
             break;
-        } else
-            return 1;
+        }
     }
+    return check;
 }
 
 bool is_arithmetic_series(std::vector <int>& ints)
 {
-    for (int i = 0; i <= ints.size() - 2; ++i)
+    int size = ints.size();
+    bool check = true;
+    for (int i = 0; i <= size - 2; ++i)
     {
         if (ints.at(i+1) - ints.at(i) != ints.at(1) - ints.at(0))
         {
-            return 0;
+            check = false;
             break;
-        } else
-            return 1;
+        }
     }
+    return check;
 }
 
 bool is_geometric_series(std::vector <int>& ints)
 {
-    for (int i = 0; i <= ints.size() - 2; ++i)
+    int size = ints.size();
+    bool check = true;
+    for (int i = 0; i <= size - 2; ++i)
     {
         if (ints.at(i+1) == ints.at(i) && ints.at(i) == 0)
         {
-            return 0;
+            check = false;
             break;
         }
-        else for (int i = 0; i <= ints.size() - 2; ++i)
-            {
+        else for (int i = 0; i <= size - 2; ++i)
+        {
             if (ints.at(i+1) / ints.at(i) != ints.at(1) / ints.at(0))
-                {
-                return 0;
+            {
+                check = false;
                 break;
-                } else
-                return 1;
             }
-
+        }
     }
+    return check;
 }
 
 int main()
@@ -88,6 +95,7 @@ int main()
     std::cout << "Enter the integers: ";
     std::vector<int> integers;
     read_integers(integers, how_many);
+//    std::cout << integers.size()<< std::endl;
 
     if(same_values(integers))
         std::cout << "All the integers are the same" << std::endl;
