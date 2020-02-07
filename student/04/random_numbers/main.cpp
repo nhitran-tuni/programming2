@@ -9,7 +9,7 @@ void produce_random_numbers(unsigned int lower, unsigned int upper)
 {
     // Implement your function here
     string seed, command;
-    cout<< "Enter a seed value or an empty line: " <<endl;
+    cout<< "Enter a seed value or an empty line: ";
     getline(cin, seed);
     cout << "" <<endl;
     if (seed == "") {
