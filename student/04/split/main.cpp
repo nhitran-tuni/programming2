@@ -32,6 +32,10 @@ std::vector <std::string> split(std::string line, char separator, bool sign = fa
             line_splitted.push_back(part);
         }
     }
+
+    if (line.at(line_size -1) == separator) {
+        line_splitted.push_back("");
+    }
     return line_splitted;
 }
 
