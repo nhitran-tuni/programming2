@@ -83,3 +83,50 @@ void Board::initalization_grid( std::vector<unsigned int>& input_numbers)
     }
 }
 
+void Board:: move_number(std::string Dir)
+{
+    char Dir_command = Dir.at(0);
+    unsigned int Dir_number = stoi(Dir.substr(2));
+    unsigned int col, row, col_empty, row_empty;
+    for(unsigned int x = 0; x < grid_.size(); ++x)
+    {
+        for (unsigned int y = 0; y < SIZE; ++y)
+        {
+            if (Dir_number == this->grid_.at(x).at(y))
+            {
+                col = y;
+                row = x;
+            }
+            if (EMPTY == this->grid_.at(x).at(y))
+            {
+                col_empty = y;
+                row_empty = x;
+            }
+        }
+    }
+    if (Dir_command == 'a' && col - col_empty == 1)
+    {
+        this->grid_.at(row).at(col - 1) = Dir_number;
+        this->grid_.at(row).at(col) = EMPTY;
+    }
+    else if (Dir_command == 'w' && row - row_empty == 1)
+    {
+        this->grid_.at(row - 1).at(col) = Dir_number;
+        this->grid_.at(row).at(col) = EMPTY;
+    }
+    else if (Dir_command == 'd' && col_empty - col == 1)
+    {
+        this->grid_.at(row).at(col +1) = Dir_number;
+        this->grid_.at(row).at(col) = EMPTY;
+    }
+    else if (Dir_command == 's' && row_empty - row == 1)
+    {
+        this->grid_.at(row + 1).at(col) = Dir_number;
+        this->grid_.at(row).at(col) = EMPTY;
+    }
+    else
+    {
+        std::cout << "Impossible direction: " << Dir_command << std::endl;
+    }
+}
+

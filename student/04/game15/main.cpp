@@ -20,9 +20,10 @@
  * */
 
 #include "board.hh"
-#include <cstring>
+#include <string>
 #include <iostream>
 #include <ctime>
+#include <vector>
 
 // More functions
 std::string Check_Command()
@@ -43,12 +44,15 @@ std::vector <unsigned int> Read_input_numbers()
 {
     std::vector<unsigned int> input_numbers;
     unsigned int new_integer = 0;
-    std::cout << "Enter the numbers 1-16 in a desired order (16 means empty):" << std::endl;
+    std::cout << "Enter the numbers 1-16 in "
+                 "a desired order (16 means empty):" << std::endl;
     for(int i = 0; i < 16; ++i)
     {
         std::cin >> new_integer;
         input_numbers.push_back(new_integer);
     }
+    std::string newline;
+    getline(std::cin, newline);
     return input_numbers;
 }
 
@@ -90,7 +94,6 @@ int main()
         {
             grid.initalization_grid_shuffle(stoi(seed));
         }
-        grid.print();
     }
     else if (command == "n" || command == "N")
     {
@@ -98,13 +101,45 @@ int main()
         unsigned int check_number = check_input_number(input_numbers);
         if(check_number != 0)
         {
-            std::cout << "Number " << check_number << " is missing" << std::endl;
+            std::cout << "Number " << check_number <<
+                         " is missing" << std::endl;
             return EXIT_FAILURE;
         }
         else
         {
             grid.initalization_grid(input_numbers);
-            grid.print();
+        }
+    }
+
+    std::string Dir;
+    while(true)
+    {
+        grid.print();
+        if (grid.has_win())
+        {
+            std::cout << "You won!" << std::endl;
+            return EXIT_SUCCESS;
+        }
+
+        std::cout << "Dir (command, number): ";
+        getline(std::cin,Dir);
+
+        if(Dir == "q")
+        {
+            return EXIT_SUCCESS;
+        }
+        else if (Dir[0] != 's' && Dir[0] != 'a' &&
+                 Dir[0] != 'w' && Dir[0] != 'd')
+        {
+            std::cout << "Unknown command: " << Dir.at(0) << std::endl;
+        }
+        else if (stoi(Dir.substr(2)) <= 0 || stoi(Dir.substr(2)) > 16)
+        {
+            std::cout << "Invalid number: " << stoi(Dir.substr(2)) << std::endl;
+        }
+        else
+        {
+            grid.move_number(Dir);
         }
     }
 

@@ -16,6 +16,7 @@
 #ifndef BOARD_HH
 #define BOARD_HH
 #include <vector>
+#include <string>
 
 const int SIZE = 4;
 
@@ -33,6 +34,9 @@ public:
     void initalization_grid_shuffle (int seed);
 
     void initalization_grid( std::vector<unsigned int>& input_numbers);
+
+    void move_number(std::string Dir);
+
 
     // More methods
 
