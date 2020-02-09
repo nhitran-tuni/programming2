@@ -35,7 +35,7 @@ public:
 
     void initalization_grid( std::vector<unsigned int>& input_numbers);
 
-    void move_number(std::string Dir);
+    void move_number(std::string Dir_commad, unsigned int Dir_number);
 
     bool has_win();
 

@@ -98,10 +98,8 @@ void Board:: find_position()
     }
 }
 
-void Board:: move_number(std::string Dir)
+void Board:: move_number(std::string Dir_command, unsigned int Dir_number)
 {
-    char Dir_command = Dir.at(0);
-    unsigned int Dir_number = stoi(Dir.substr(2));
     unsigned int col = 0, row = 0;
     for(unsigned int x = 0; x < grid_.size(); ++x)
     {
@@ -115,22 +113,22 @@ void Board:: move_number(std::string Dir)
         }
     }
     find_position();
-    if (Dir_command == 'a' && col - col_empty == 1)
+    if (Dir_command == "a" && col - col_empty == 1 && row == row_empty)
     {
         this->grid_.at(row).at(col - 1) = Dir_number;
         this->grid_.at(row).at(col) = EMPTY;
     }
-    else if (Dir_command == 'w' && row - row_empty == 1)
+    else if (Dir_command == "w" && row - row_empty == 1 && col == col_empty)
     {
         this->grid_.at(row - 1).at(col) = Dir_number;
         this->grid_.at(row).at(col) = EMPTY;
     }
-    else if (Dir_command == 'd' && col_empty - col == 1)
+    else if (Dir_command == "d" && col_empty - col == 1 && row == row_empty)
     {
         this->grid_.at(row).at(col +1) = Dir_number;
         this->grid_.at(row).at(col) = EMPTY;
     }
-    else if (Dir_command == 's' && row_empty - row == 1)
+    else if (Dir_command == "s" && row_empty - row == 1 && col == col_empty)
     {
         this->grid_.at(row + 1).at(col) = Dir_number;
         this->grid_.at(row).at(col) = EMPTY;
