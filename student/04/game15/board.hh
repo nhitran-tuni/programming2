@@ -38,6 +38,10 @@ public:
     void move_number(std::string Dir);
 
     bool has_win();
+
+    void find_position();
+
+    bool solvable();
     // More methods
 
 private:
@@ -46,6 +50,9 @@ private:
 
     // Game grid for the 15 puzzle
     std::vector<std::vector<unsigned int>> grid_;
+
+    unsigned int row_empty;
+    unsigned int col_empty;
 
     // More attributes/methods
 };

@@ -114,32 +114,41 @@ int main()
     std::string Dir;
     while(true)
     {
-        grid.print();
-        if (grid.has_win())
+        if (grid.solvable())
         {
-            std::cout << "You won!" << std::endl;
-            return EXIT_SUCCESS;
-        }
+            std::cout << "Game is solvable: Go ahead!" << std::endl;
+            grid.print();
+            if (grid.has_win())
+            {
+                std::cout << "You won!" << std::endl;
+                return EXIT_SUCCESS;
+            }
 
-        std::cout << "Dir (command, number): ";
-        getline(std::cin,Dir);
+            std::cout << "Dir (command, number): ";
+            getline(std::cin,Dir);
 
-        if(Dir == "q")
-        {
-            return EXIT_SUCCESS;
-        }
-        else if (Dir[0] != 's' && Dir[0] != 'a' &&
-                 Dir[0] != 'w' && Dir[0] != 'd')
-        {
-            std::cout << "Unknown command: " << Dir.at(0) << std::endl;
-        }
-        else if (stoi(Dir.substr(2)) <= 0 || stoi(Dir.substr(2)) > 16)
-        {
-            std::cout << "Invalid number: " << stoi(Dir.substr(2)) << std::endl;
+            if(Dir == "q")
+            {
+                return EXIT_SUCCESS;
+            }
+            else if (Dir[0] != 's' && Dir[0] != 'a' &&
+                     Dir[0] != 'w' && Dir[0] != 'd')
+            {
+                std::cout << "Unknown command: " << Dir.at(0) << std::endl;
+            }
+            else if (stoi(Dir.substr(2)) <= 0 || stoi(Dir.substr(2)) > 16)
+            {
+                std::cout << "Invalid number: " << stoi(Dir.substr(2)) << std::endl;
+            }
+            else
+            {
+                grid.move_number(Dir);
+            }
         }
         else
         {
-            grid.move_number(Dir);
+            std::cout << "Game is not solvable. What a pity." << std::endl;
+            return EXIT_FAILURE;
         }
     }
 

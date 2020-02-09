@@ -58,7 +58,7 @@ void Board::my_shuffle(std::vector<unsigned int> &numbers, int seed)
 void Board::initalization_grid_shuffle (int seed)
 {
     std::vector<unsigned int> numbers;
-    for(unsigned int i = 1; i <= 16; ++i)
+    for(unsigned int i = 1; i <= EMPTY; ++i)
     {
         numbers.push_back(i);
     }
@@ -83,11 +83,26 @@ void Board::initalization_grid( std::vector<unsigned int>& input_numbers)
     }
 }
 
+void Board:: find_position()
+{
+    for(unsigned int x = 0; x < grid_.size(); ++x)
+    {
+        for (unsigned int y = 0; y < SIZE; ++y)
+        {
+            if (EMPTY == this->grid_.at(x).at(y))
+            {
+                col_empty = y;
+                row_empty = x;
+            }
+        }
+    }
+}
+
 void Board:: move_number(std::string Dir)
 {
     char Dir_command = Dir.at(0);
     unsigned int Dir_number = stoi(Dir.substr(2));
-    unsigned int col, row, col_empty, row_empty;
+    unsigned int col, row;
     for(unsigned int x = 0; x < grid_.size(); ++x)
     {
         for (unsigned int y = 0; y < SIZE; ++y)
@@ -97,13 +112,9 @@ void Board:: move_number(std::string Dir)
                 col = y;
                 row = x;
             }
-            if (EMPTY == this->grid_.at(x).at(y))
-            {
-                col_empty = y;
-                row_empty = x;
-            }
         }
     }
+    find_position();
     if (Dir_command == 'a' && col - col_empty == 1)
     {
         this->grid_.at(row).at(col - 1) = Dir_number;
@@ -144,4 +155,37 @@ bool Board::has_win()
         }
     }
     return true;
+}
+
+bool Board:: solvable()
+{
+    find_position();
+    std::vector <unsigned int> check_solvable;
+    unsigned int check_sum = 0;
+    unsigned int swap_number = grid_.at(3).at(col_empty);
+    this->grid_.at(3).at(col_empty) = EMPTY;
+    this->grid_.at(row_empty).at(col_empty) = swap_number;
+    for(unsigned int x = 0; x < grid_.size(); ++x)
+    {
+        for (unsigned int y = 0; y < SIZE; ++y)
+        {
+            check_solvable.push_back(grid_.at(x).at(y));
+        }
+    }
+    for (unsigned int i = 0; i < EMPTY; ++i)
+    {
+        for (unsigned int j = i +1; j < EMPTY - 1; ++j)
+        {
+            if (check_solvable[i] > check_solvable[j])
+            {
+                check_sum += 1;
+            }
+        }
+    }
+    if (check_sum % 2 == 0)
+    {
+        return true;
+    }
+    else
+        return false;
 }
