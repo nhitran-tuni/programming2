@@ -114,6 +114,7 @@ int main()
     std::string Dir;
     if (grid.solvable())
     {
+        std::cout << "Game is solvable: Go ahead!" << std::endl;
         while(true)
         {
             grid.print();
@@ -125,27 +126,30 @@ int main()
 
             std::cout << "Dir (command, number): ";
             getline(std::cin,Dir);
-            char separator = ' ';
-            std::string::size_type split_index = Dir.find(separator, 0);
-            std::string Dir_command = Dir.substr(0, split_index);
-            unsigned int Dir_number = stoi(Dir.substr(split_index + 1));
 
             if(Dir == "q")
             {
                 return EXIT_SUCCESS;
             }
-            else if (Dir_command != "s" && Dir_command != "a" &&
-                     Dir_command != "w" && Dir_command != "d")
-            {
-                std::cout << "Unknown command: " << Dir_command << std::endl;
-            }
-            else if (Dir_number <= 0 || Dir_number > 16)
-            {
-                std::cout << "Invalid number: " << Dir_number << std::endl;
-            }
             else
             {
-                grid.move_number(Dir_command, Dir_number);
+                char separator = ' ';
+                std::string::size_type split_index = Dir.find(separator, 0);
+                std::string Dir_command = Dir.substr(0, split_index);
+                unsigned int Dir_number = stoi(Dir.substr(split_index + 1));
+                if (Dir_command != "s" && Dir_command != "a" &&
+                     Dir_command != "w" && Dir_command != "d")
+                {
+                    std::cout << "Unknown command: " << Dir_command << std::endl;
+                }
+                else if (Dir_number <= 0 || Dir_number > 16)
+                {
+                    std::cout << "Invalid number: " << Dir_number << std::endl;
+                }
+                else
+                {
+                    grid.move_number(Dir_command, Dir_number);
+                }
             }
         }
     }
