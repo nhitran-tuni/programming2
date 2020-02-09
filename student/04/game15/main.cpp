@@ -30,11 +30,13 @@ std::string Check_Command()
 {
     // Check if the user's input command is valid or not
     std::string command;
+    std::cout << "Random initialization (y/n): ";
+    getline(std::cin, command);
     while(command != "n" && command != "N" && command != "y" && command != "Y")
     {
+        std::cout << "Unknown choice: " << command << std::endl;
         std::cout << "Random initialization (y/n): ";
         getline(std::cin, command);
-        std::cout << "Unknown choice: " << command << std::endl;
     }
     return command;
 }
