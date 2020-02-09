@@ -102,7 +102,7 @@ void Board:: move_number(std::string Dir)
 {
     char Dir_command = Dir.at(0);
     unsigned int Dir_number = stoi(Dir.substr(2));
-    unsigned int col, row;
+    unsigned int col = 0, row = 0;
     for(unsigned int x = 0; x < grid_.size(); ++x)
     {
         for (unsigned int y = 0; y < SIZE; ++y)
