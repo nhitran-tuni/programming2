@@ -4,10 +4,10 @@
  *  Describes a two-dimensional grid for puzzle 15 with necessary functions.
  *
  * Program author ( Fill with your own info )
- * Name: Teemu Teekkari
- * Student number: 123456
- * UserID: teekkart ( Necessary due to gitlab folder naming. )
- * E-Mail: teemu.teekkari@tuni.fi
+ * Name: Thuy Phuong Nhi Tran
+ * Student number: 291937
+ * UserID: mpthtr ( Necessary due to gitlab folder naming. )
+ * E-Mail: thuyphuongnhi.tran@tuni.fi
  *
  * Notes:
  *
@@ -37,7 +37,7 @@ public:
 
     void move_number(std::string Dir);
 
-
+    bool has_win();
     // More methods
 
 private:

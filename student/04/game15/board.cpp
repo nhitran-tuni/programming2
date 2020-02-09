@@ -130,3 +130,18 @@ void Board:: move_number(std::string Dir)
     }
 }
 
+bool Board::has_win()
+{
+    for(unsigned int x = 0; x < grid_.size(); ++x)
+    {
+        for (unsigned int y = 0; y < SIZE; ++y)
+        {
+            if(grid_.at(x).at(y) != (4 * x + y + 1))
+            {
+                return false;
+                break;
+            }
+        }
+    }
+    return true;
+}
