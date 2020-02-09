@@ -31,16 +31,22 @@ public:
     // Prints the game grid
     void print();
 
+    // Create game grid using random number generator
     void initalization_grid_shuffle (int seed);
 
+    // Create game grid vector using input from the user
     void initalization_grid( std::vector<unsigned int>& input_numbers);
 
+    // Movement of the input number
     void move_number(std::string Dir_commad, unsigned int Dir_number);
 
+    // Check if the puzzle has been solved
     bool has_win();
 
+    // Find position of EMPTY (dot)
     void find_position();
 
+    // Check if the puzzle is initally solvable
     bool solvable();
     // More methods
 
@@ -51,6 +57,7 @@ private:
     // Game grid for the 15 puzzle
     std::vector<std::vector<unsigned int>> grid_;
 
+    // The position of the EMPTY (dot)
     unsigned int row_empty;
     unsigned int col_empty;
 

@@ -28,20 +28,20 @@
 // More functions
 std::string Check_Command()
 {
+    // Check if the user's input command is valid or not
     std::string command;
-    std::cout << "Random initialization (y/n): ";
-    getline(std::cin, command);
     while(command != "n" && command != "N" && command != "y" && command != "Y")
     {
-        std::cout << "Unknown choice: " << command << std::endl;
         std::cout << "Random initialization (y/n): ";
         getline(std::cin, command);
+        std::cout << "Unknown choice: " << command << std::endl;
     }
     return command;
 }
 
 std::vector <unsigned int> Read_input_numbers()
 {
+    // Read the input from the user and save them to a vector
     std::vector<unsigned int> input_numbers;
     unsigned int new_integer = 0;
     std::cout << "Enter the numbers 1-16 in "
@@ -58,6 +58,8 @@ std::vector <unsigned int> Read_input_numbers()
 
 int check_input_number (std::vector <unsigned int>& input_numbers)
 {
+    // The function check if user input is 16 distingushed integers from 1 to 16
+    // If not the function returns the smallest integer which is missing
     unsigned int check_array[17] = {0};
     unsigned int check_number = 0;
     check_array[1] = 0;
@@ -81,6 +83,9 @@ int main()
     // More functionality
     Board grid;
     std::string command = Check_Command();
+
+    // If the command is valid the programme continues
+    // Else the programme raises error and exits
     if (command == "y" ||  command == "Y")
     {
         std::string seed;
@@ -112,12 +117,17 @@ int main()
     }
 
     std::string Dir;
+
+    // Check if the game grid is initially solvable
+    // If not the programme teminates
     if (grid.solvable())
     {
         std::cout << "Game is solvable: Go ahead!" << std::endl;
         while(true)
         {
             grid.print();
+
+            // If the puzzle is solved, the programme terminates
             if (grid.has_win())
             {
                 std::cout << "You won!" << std::endl;
@@ -127,16 +137,22 @@ int main()
             std::cout << "Dir (command, number): ";
             getline(std::cin,Dir);
 
+            // If the user's input is to quit, the programme terminates
             if(Dir == "q")
             {
                 return EXIT_SUCCESS;
             }
             else
             {
+                // Split the input string into 2 parts
+                // The string command and integer need-to-move number
                 char separator = ' ';
                 std::string::size_type split_index = Dir.find(separator, 0);
                 std::string Dir_command = Dir.substr(0, split_index);
                 unsigned int Dir_number = stoi(Dir.substr(split_index + 1));
+
+                // Require input again until the user's input is valid
+                // Inform the user the invalid part of the invalid input
                 if (Dir_command != "s" && Dir_command != "a" &&
                      Dir_command != "w" && Dir_command != "d")
                 {

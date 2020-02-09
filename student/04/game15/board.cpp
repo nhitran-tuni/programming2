@@ -57,17 +57,23 @@ void Board::my_shuffle(std::vector<unsigned int> &numbers, int seed)
 
 void Board::initalization_grid_shuffle (int seed)
 {
+    // Create vector contains integers from 1 to 16.
     std::vector<unsigned int> numbers;
     for(unsigned int i = 1; i <= EMPTY; ++i)
     {
         numbers.push_back(i);
     }
+    // Shuffle integers in vector.
     my_shuffle(numbers, seed);
+
+    // Create two-dimensional vector grid.
     initalization_grid(numbers);
 }
 
 void Board::initalization_grid( std::vector<unsigned int>& input_numbers)
 {
+    // Break vector containing 16 integers into 4 smaller vectors.
+    // Save those to game grid vector.
     unsigned int StarIndex = 0;
     unsigned int EndIndex = 3;
     while( EndIndex < input_numbers.size())
@@ -85,6 +91,7 @@ void Board::initalization_grid( std::vector<unsigned int>& input_numbers)
 
 void Board:: find_position()
 {
+    // Find the location of EMPTY elements.
     for(unsigned int x = 0; x < grid_.size(); ++x)
     {
         for (unsigned int y = 0; y < SIZE; ++y)
@@ -100,6 +107,7 @@ void Board:: find_position()
 
 void Board:: move_number(std::string Dir_command, unsigned int Dir_number)
 {
+    // Find the location of the need-to-move input number.
     unsigned int col = 0, row = 0;
     for(unsigned int x = 0; x < grid_.size(); ++x)
     {
@@ -112,7 +120,11 @@ void Board:: move_number(std::string Dir_command, unsigned int Dir_number)
             }
         }
     }
+
+    // Find the position of EMPTY element at this time.
     find_position();
+
+    // Movement of input number depending on the command.
     if (Dir_command == "a" && col - col_empty == 1 && row == row_empty)
     {
         this->grid_.at(row).at(col - 1) = Dir_number;
@@ -133,6 +145,7 @@ void Board:: move_number(std::string Dir_command, unsigned int Dir_number)
         this->grid_.at(row + 1).at(col) = Dir_number;
         this->grid_.at(row).at(col) = EMPTY;
     }
+    // Case when the number cannot move.
     else
     {
         std::cout << "Impossible direction: " << Dir_command << std::endl;
@@ -141,6 +154,7 @@ void Board:: move_number(std::string Dir_command, unsigned int Dir_number)
 
 bool Board::has_win()
 {
+    // Check if the puzzle has been solve
     for(unsigned int x = 0; x < grid_.size(); ++x)
     {
         for (unsigned int y = 0; y < SIZE; ++y)
@@ -157,12 +171,20 @@ bool Board::has_win()
 
 bool Board:: solvable()
 {
+    // The function check if the inititial puzzle can be solvable
+
+    //Find the position of EMPTY elements
     find_position();
     std::vector <unsigned int> check_solvable;
     unsigned int check_sum = 0;
+
+    // Move the EMPTY element to the last row
     unsigned int swap_number = grid_.at(3).at(col_empty);
     this->grid_.at(3).at(col_empty) = EMPTY;
     this->grid_.at(row_empty).at(col_empty) = swap_number;
+
+    // Check if the sum of inverse number is even or odd
+    // Return if the puzzle can be solve
     for(unsigned int x = 0; x < grid_.size(); ++x)
     {
         for (unsigned int y = 0; y < SIZE; ++y)
