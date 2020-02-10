@@ -29,6 +29,9 @@
 std::string Check_Command()
 {
     // Check if the user's input command is valid or not
+    // The function askes the user input infinitely if the input is different
+    // from "n", "N", "y", "Y"
+    // The function returns the user's command
     std::string command;
     std::cout << "Random initialization (y/n): ";
     getline(std::cin, command);
@@ -43,7 +46,8 @@ std::string Check_Command()
 
 std::vector <unsigned int> Read_input_numbers()
 {
-    // Read the input from the user and save them to a vector
+    // Read the input from the user and save the them respectively to a vector
+    // The function returns the vector containing 16 integers.
     std::vector<unsigned int> input_numbers;
     unsigned int new_integer = 0;
     std::cout << "Enter the numbers 1-16 in "
@@ -61,6 +65,7 @@ std::vector <unsigned int> Read_input_numbers()
 int check_input_number (std::vector <unsigned int>& input_numbers)
 {
     // The function check if user input is 16 distingushed integers from 1 to 16
+    // If the input is 16 distingushed integers from 1 to 16, it returns 0
     // If not the function returns the smallest integer which is missing
     unsigned int check_array[17] = {0};
     unsigned int check_number = 0;
@@ -90,6 +95,9 @@ int main()
     // Else the programme raises error and exits
     if (command == "y" ||  command == "Y")
     {
+        // The game will use the random number generator to draw the grid
+        // If the seed value is empty, clock time of computer is used
+        // With the same seed value, user will get the same grid
         std::string seed;
         std::cout << "Enter a seed value (or an empty line): ";
         getline(std::cin, seed);
@@ -104,6 +112,9 @@ int main()
     }
     else if (command == "n" || command == "N")
     {
+        // The grid is given based on the numbers of user input
+        // If the input is not valid based on the function check_input_number
+        // the program raises error and terminates
         std::vector<unsigned int> input_numbers = Read_input_numbers();
         unsigned int check_number = check_input_number(input_numbers);
         if(check_number != 0)
