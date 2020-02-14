@@ -4,16 +4,18 @@
 
 int main()
 {
-    std::string input_filename = "";
+    std::string input_filename, output_filename;
     std::cout << "Input file: ";
-    getline(std::cin,input_filename);
+    getline(std::cin, input_filename);
+    std::cout << "Output file: ";
+    getline(std::cin, output_filename);
 
-    char separator = '.';
-    std::string output_filename = "";
-    std::string::size_type EndIndex;
-    EndIndex = input_filename.find(separator, 0);
-    output_filename = input_filename.substr(0, EndIndex) + ".output";
-    std::cout << "Output file: " << output_filename << std::endl;
+//    char separator = '.';
+//    std::string output_filename = "";
+//    std::string::size_type EndIndex;
+//    EndIndex = input_filename.find(separator, 0);
+//    output_filename = input_filename.substr(0, EndIndex) + ".output";
+//    std::cout << "Output file: " << output_filename << std::endl;
 
     std::ifstream file_object(input_filename);
     if (not file_object)
@@ -36,6 +38,8 @@ int main()
             outfile << new_line << std::endl;
             number += 1;
         }
+        file_object.close();
+        outfile.close();
     }
 
     return 0;
