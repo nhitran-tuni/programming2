@@ -26,13 +26,13 @@ int main()
         unsigned int number = 1;
         std::string line;
 
-        std::ofstream outfile;
-        outfile.open(output_filename);
+        std::ofstream outfile(output_filename);
+//        outfile.open(output_filename);
 
         while ( getline(file_object, line) )
         {
             std::string num_str = std::to_string(number);
-            std::string new_line = num_str + line;
+            std::string new_line = num_str + " " + line;
             outfile << new_line << std::endl;
             number += 1;
         }
