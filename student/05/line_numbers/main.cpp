@@ -20,7 +20,7 @@ int main()
     std::ifstream file_object(input_filename);
     if (not file_object)
     {
-        std::cout << "Error! The file not_a_file.input cannot be opened." << std::endl;
+        std::cout << "Error! The file " << input_filename << " cannot be opened." << std::endl;
         return EXIT_FAILURE;
     }
     else
