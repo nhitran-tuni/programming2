@@ -28,11 +28,11 @@ int main()
             EndIndex = line.find(separator, 0);
             if (points.find(line.substr(0, EndIndex)) == points.end())
             {
-                points.insert({line.substr(0, EndIndex), (int)line.at(EndIndex + 1) });
+                points.insert({line.substr(0, EndIndex), stoi(line.substr(EndIndex + 1 )) });
             }
             else
             {
-                points.at(line.substr(0, EndIndex)) += (int)line.at(EndIndex + 1);
+                points.at(line.substr(0, EndIndex)) += stoi(line.substr(EndIndex + 1 ));
             }
         }
         file_object.close();
