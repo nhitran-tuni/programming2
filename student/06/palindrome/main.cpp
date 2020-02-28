@@ -15,14 +15,14 @@ bool palindrome_recursive(std::string s)
     unsigned int size = s.size();
     bool flag = true;
 
-    if (size == 0)
+    if (size < 1 )
     {
         flag = true;
     }
     else if (s.at(0) == s.at(size - 1))
     {
         s = s.substr(1, size - 2);
-        palindrome_recursive(s);
+        flag = palindrome_recursive(s);
     }
     else
     {
