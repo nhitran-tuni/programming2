@@ -13,22 +13,21 @@ bool palindrome_recursive(std::string s)
 
   // Add your implementation here
     unsigned int size = s.size();
-    bool flag = true;
+//    bool flag = true;
 
     if (size < 1 )
     {
-        flag = true;
+        return true;
     }
     else if (s.at(0) == s.at(size - 1))
     {
         s = s.substr(1, size - 2);
-        flag = palindrome_recursive(s);
     }
     else
     {
-        flag = false;
+        return false;
     }
-    return flag;
+    return palindrome_recursive(s);
 }
 
 // Do not modify rest of the code, or the automated testing won't work.
