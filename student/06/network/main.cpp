@@ -68,7 +68,7 @@ unsigned int depth(std::map <std::string, std::vector <std::string>> network, st
         for (auto name : network[id])
         {
 //            sum += 1;
-            sum = depth(network, name);
+            sum += depth(network, name);
         }
     }
     else
