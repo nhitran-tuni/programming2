@@ -62,20 +62,34 @@ unsigned int count(std::map <std::string, std::vector <std::string>> network, st
 unsigned int depth(std::map <std::string, std::vector <std::string>> network, std::string id)
 {
     unsigned int sum = 0;
-    if (network.find(id) != network.end())
+    if (network[id].size() == 0)
+        return 1;
+
+    if (not(network[id].empty()))
     {
-        sum += 1;
         for (auto name : network[id])
         {
-//            sum += 1;
-            sum += depth(network, name);
+            unsigned int sum1 = depth(network, name);
+            if (sum1 > sum)
+            {
+                sum = sum1;
+            }
         }
+
     }
-    else
-    {
-        return sum;
-    }
-    return sum;
+
+//    for (auto name : network[id])
+//    {
+//        if (network.find(name) == network.end())
+//        {
+//            unsigned int sum1 = depth(network, name);
+//            if (sum1 > sum)
+//            {
+//                sum = sum1;
+//            }
+//        }
+//    }
+    return sum + 1;
 }
 
 int main()
