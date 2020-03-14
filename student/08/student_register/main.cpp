@@ -101,6 +101,22 @@ int main() {
         getline(std::cin, line);
         std::vector<std::string> parts = split(line, ' ', true);
 
+        std::ofstream outfile (file_name);
+        for (std::map< std::string, Student* >::iterator iter1 = student_numbers.begin(); iter1 != student_numbers.end(); ++iter1) {
+            std::string new_line = iter1->second->student_number + ";"
+                    + iter1->second->user_id + ";"
+                    + iter1->second->name + ";"
+                    + iter1->second->phone_number + ";"
+                    + iter1->second->email + ";"
+                    + iter1->second->skype;
+            if (iter1->second->skype == ""){
+                outfile << new_line.substr(0,new_line.length() - 1) << std::endl;
+            } else {
+                outfile << new_line << std::endl;
+            }
+        }
+        outfile.close();
+
         if(parts.empty()) {
             continue;
         }
@@ -143,12 +159,12 @@ int main() {
                 std::cout << std::endl;
 
                 if (! is_valid_phone_number(new_phone_number)) {
-//                    std::cout << "Erroneous phone number: " << new_phone_number << std::endl << std::endl;
                     continue;
                 } else {
-                    std::map< std::string, Student* >::iterator iter = student_numbers.begin();
-                    if (iter->first == parts[1]) {
-                        student_numbers[iter->first]->phone_number = new_phone_number;
+                    for (std::map< std::string, Student* >::iterator iter = student_numbers.begin(); iter != student_numbers.end(); ++iter) {
+                        if (iter->first == parts[1]) {
+                            iter->second->phone_number = new_phone_number;
+                        }
                     }
                 }
             }
@@ -172,5 +188,3 @@ int main() {
         }
     }
 }
-
-
