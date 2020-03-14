@@ -109,11 +109,7 @@ int main() {
                     + iter1->second->phone_number + ";"
                     + iter1->second->email + ";"
                     + iter1->second->skype;
-            if (iter1->second->skype == ""){
-                outfile << new_line.substr(0,new_line.length() - 1) << std::endl;
-            } else {
-                outfile << new_line << std::endl;
-            }
+            outfile << new_line << std::endl;
         }
         outfile.close();
 
