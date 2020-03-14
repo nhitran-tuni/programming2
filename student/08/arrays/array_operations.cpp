@@ -28,9 +28,9 @@ void copy(int* itemptr, int* endptr, int* targetptr) {
 }
 
 void reverse(int* leftptr, int* rightptr) {
-    while (leftptr <= rightptr) {
+    while (leftptr <= (rightptr - 1)) {
         int end = *(rightptr - 1 );
-        *rightptr = *leftptr;
+        *(rightptr - 1) = *leftptr;
         *leftptr = end;
     leftptr++;
     rightptr--;
