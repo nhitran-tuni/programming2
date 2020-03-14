@@ -63,7 +63,7 @@ void read_data(std::stack <double> &num, std::stack <std::string> &opera, std::s
         }
     }
 
-    if (num.size() != opera.size() - 1) {
+    if (num.size() != 1) {
         std::cout << "Error: Too few operators" << std::endl;
         exit(EXIT_FAILURE);
     }
@@ -76,7 +76,7 @@ void operation_(std::stack <double> &num, std::string oper) {
     num.pop();
 
     if (num.empty()) {
-        std::cout << "Error: Too few operators" << std::endl;
+        std::cout << "Error: Too few operands" << std::endl;
         exit(EXIT_FAILURE);
     }
 
