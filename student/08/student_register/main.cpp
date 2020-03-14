@@ -102,7 +102,7 @@ int main() {
         std::vector<std::string> parts = split(line, ' ', true);
 
         std::ofstream outfile (file_name);
-        for (std::map< std::string, Student* >::iterator iter1 = student_numbers.begin(); iter1 != student_numbers.end(); ++iter1) {
+        for (std::map< std::string, Student* >::iterator iter1 = user_ids.begin(); iter1 != user_ids.end(); ++iter1) {
             std::string new_line = iter1->second->student_number + ";"
                     + iter1->second->user_id + ";"
                     + iter1->second->name + ";"
