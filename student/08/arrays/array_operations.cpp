@@ -2,7 +2,7 @@
 #include <istream>
 
 int greatest_v1(int* itemptr, int size) {
-    int max = itemptr[0];
+    int max = *itemptr;
     for (int i = 0; i < size; i++) {
         if (max < itemptr[i]) {
             max = itemptr[i];
@@ -12,7 +12,7 @@ int greatest_v1(int* itemptr, int size) {
 }
 
 int greatest_v2(int* itemptr, int* endptr) {
-    int max = itemptr[0];
+    int max = *itemptr;
     for (;itemptr < endptr; itemptr++) {
         if (max < *itemptr) {
             max = *itemptr;
@@ -29,11 +29,11 @@ void copy(int* itemptr, int* endptr, int* targetptr) {
 
 void reverse(int* leftptr, int* rightptr) {
     while (leftptr < rightptr) {
-        int end = *rightptr;
+        int end = *(rightptr - 1 );
         *rightptr = *leftptr;
         *leftptr = end;
-    }
     leftptr++;
     rightptr--;
+    }
 }
 
