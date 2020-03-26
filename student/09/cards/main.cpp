@@ -31,6 +31,12 @@ int main() {
     cout << endl << "print_from_top_to_bottom" << endl;
     deck.print_from_top_to_bottom(cout);
 
+//    cout << endl << "remove" << endl;
+//    deck.remove(p);
+
+//    cout << endl << "print_from_top_to_bottom" << endl;
+//    deck.print_from_top_to_bottom(cout);
+
     cout << endl << "top_to_bottom * 1" << endl;
     deck.top_to_bottom();
 
@@ -40,12 +46,12 @@ int main() {
     cout << endl << "print_from_bottom_to_top" << endl;
     deck.print_from_bottom_to_top(cout);
 
-    cout << endl << "remove" << endl;
-    deck.remove(p);
+//    cout << endl << "remove" << endl;
+//    deck.remove(p);
 
 //    cout << endl << "print_from_top_to_bottom" << endl;
 //    deck.print_from_top_to_bottom(cout);
 
-//    cout << endl << "destructor" << endl;
+    cout << endl << "destructor" << endl;
     return EXIT_SUCCESS;
 }

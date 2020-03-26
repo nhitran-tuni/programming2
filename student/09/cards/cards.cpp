@@ -47,7 +47,7 @@ bool Cards::remove(int &id) {
 
     id = card_remove->data;
 
-    if (top_ == bottom_) {
+    if (top_->data == bottom_->data) {
         top_ = nullptr;
         bottom_ = nullptr;
     } else {
