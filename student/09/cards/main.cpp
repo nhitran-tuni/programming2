@@ -16,7 +16,7 @@ int main() {
     deck.print_from_top_to_bottom(cout);
 
     cout << endl << "add * n" << endl;
-    for(int i = n-1; i >= 0; i--) {
+    for(int i = 0; i < n; i++) {
         deck.add(i);
     }
 

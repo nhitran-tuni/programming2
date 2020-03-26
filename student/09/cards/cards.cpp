@@ -21,8 +21,8 @@ void Cards::add(int id) {
         top_ = new_card;
         bottom_ = new_card;
     } else {
-        bottom_->next = new_card;
-        bottom_ = new_card;
+        new_card->next = top_;
+        top_ = new_card;
     }
 }
 
@@ -42,8 +42,7 @@ bool Cards::remove(int &id) {
         return false;
     }
 
-    Card_data* card_remove = bottom_;
-    Card_data* card_count_ = top_;
+    Card_data* card_remove = top_;
 
     id = card_remove->data;
 
@@ -51,15 +50,7 @@ bool Cards::remove(int &id) {
         top_ = nullptr;
         bottom_ = nullptr;
     } else {
-        while ( card_count_ != nullptr ) {
-            if ( card_count_->next == bottom_ ) {
-                card_count_->next = nullptr;
-                bottom_ = card_count_;
-                break;
-            }else {
-                card_count_ = card_count_->next;
-            }
-        }
+        top_ = top_->next;
     }
 
     delete card_remove;
