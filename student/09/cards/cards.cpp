@@ -97,7 +97,8 @@ bool Cards::top_to_bottom() {
 
 void Cards::print_from_bottom_to_top(ostream &s) {
     Card_data* card_print_inverse = bottom_;
-    unsigned int count = 1;
+    unsigned int count;
+    count = 1;
 
     while (card_print_inverse != top_) {
         s << count << ": " << card_print_inverse->data << endl;
