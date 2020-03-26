@@ -35,7 +35,7 @@ int main()
             }
             q.reset_cycle(cycle);
         } else if ( choice == "q" ) {
-            break;
+            return EXIT_SUCCESS;
         } else {
             cout << "An unknown command" << endl;
         }
