@@ -42,7 +42,8 @@ bool Cards::remove(int &id) {
         return false;
     }
 
-    Card_data* card_remove = top_;
+    Card_data* card_remove = bottom_;
+    Card_data* card_count_ = top_;
 
     id = card_remove->data;
 
@@ -50,7 +51,15 @@ bool Cards::remove(int &id) {
         top_ = nullptr;
         bottom_ = nullptr;
     } else {
-        top_ = top_->next;
+        while ( card_count_ != nullptr ) {
+            if ( card_count_->next == bottom_ ) {
+                card_count_->next = nullptr;
+                bottom_ = card_count_;
+                break;
+            }else {
+                card_count_ = card_count_->next;
+            }
+        }
     }
 
     delete card_remove;

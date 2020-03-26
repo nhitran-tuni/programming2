@@ -11,6 +11,7 @@ int main() {
     int n = 0;
     cout << "Enter amount of test cards: ";
     cin >> n;
+    int p;
 
     cout << endl << "print_from_top_to_bottom (deck is empty)" << endl;
     deck.print_from_top_to_bottom(cout);
@@ -39,6 +40,12 @@ int main() {
     cout << endl << "print_from_bottom_to_top" << endl;
     deck.print_from_bottom_to_top(cout);
 
-    cout << endl << "destructor" << endl;
+    cout << endl << "remove" << endl;
+    deck.remove(p);
+
+//    cout << endl << "print_from_top_to_bottom" << endl;
+//    deck.print_from_top_to_bottom(cout);
+
+//    cout << endl << "destructor" << endl;
     return EXIT_SUCCESS;
 }
