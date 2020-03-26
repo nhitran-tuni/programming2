@@ -11,7 +11,6 @@ int main() {
     int n = 0;
     cout << "Enter amount of test cards: ";
     cin >> n;
-    int p;
 
     cout << endl << "print_from_top_to_bottom (deck is empty)" << endl;
     deck.print_from_top_to_bottom(cout);
