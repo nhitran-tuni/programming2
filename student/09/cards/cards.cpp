@@ -59,7 +59,7 @@ bool Cards::remove(int &id) {
 }
 
 bool Cards::bottom_to_top() {
-    if ( top_ == nullptr) {
+    if ( top_ == nullptr || top_->data == bottom_->data) {
         return false;
     }
 
@@ -82,7 +82,7 @@ bool Cards::bottom_to_top() {
 }
 
 bool Cards::top_to_bottom() {
-    if ( top_ == nullptr ) {
+    if ( top_ == nullptr || top_->data == bottom_->data ) {
         return false;
     }
 
