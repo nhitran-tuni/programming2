@@ -54,7 +54,7 @@ private:
 //    unsigned int car_pass_num;
 
     // You can define more private features here
-    void remove_front();
+    void dequeue();
 
 };
 

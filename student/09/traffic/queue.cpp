@@ -4,13 +4,13 @@
 using namespace std;
 // Implement the member functions of Queue here
 
-Queue::Queue(unsigned int cycle): first_(nullptr), last_(nullptr), cycle_(cycle) /*car_pass_num(cycle_)*/ {
+Queue::Queue(unsigned int cycle): first_(nullptr), last_(nullptr), cycle_(cycle) {
 }
 
 Queue::~Queue() {
     while (first_ != nullptr) {
         Vehicle* car_release = first_;
-        car_release = car_release->next;
+        first_ = first_->next;
 
         delete car_release;
     }
@@ -19,9 +19,8 @@ Queue::~Queue() {
 void Queue::enqueue(string reg) {
     Vehicle* car_add = new Vehicle{reg, nullptr};
 
-    if ( (is_green_) ) {
+    if ( is_green_ ) {
         cout << "GREEN: The vehicle " << reg << " need not stop to wait" << endl;
-//        is_green_ = !(is_green_);
     } else {
         if(first_ == nullptr) {
             first_ = car_add;
@@ -33,7 +32,7 @@ void Queue::enqueue(string reg) {
     }
 }
 
-void Queue::remove_front() {
+void Queue::dequeue() {
     if (first_->reg_num == last_->reg_num) {
         first_ = nullptr;
         last_ = nullptr;
@@ -55,8 +54,7 @@ void Queue::switch_light() {
                     break;
                 }
                 car_name += first_->reg_num + " ";
-                remove_front();
-//                car_pass_num--;
+                dequeue();
             }
         }
         cout << "GREEN: Vehicle(s) " << car_name << "can go on" << endl;
