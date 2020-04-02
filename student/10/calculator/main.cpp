@@ -109,7 +109,7 @@ int main() {
             }
         }
 
-        if ( new_command.action == nullptr && new_command.str != "" ) {
+        if ( new_command.action == nullptr && new_command.str != "" && pieces.size() == 1) {
             cout << GREETING_AT_END << endl;
             break;
         }
