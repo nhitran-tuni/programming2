@@ -80,6 +80,21 @@ public:
      * of course implement), false otherwise
      */
     bool sign_up_student(Account* new_student, const Date& sign_up_date);
+
+    /**
+     * @brief get_course
+     * @return course having instance
+     * @note the existence of both course and instance checked before,
+     * thus course existence does not needed to be checked.
+     */
+    Course *get_course();
+
+    /**
+     * @brief complete_student
+     * @param complete_stud
+     * remove the account completing instance
+     */
+    void complete_student(Account* complete_stud);
 private:
     // pointer to course instance belongs to
     Course* cour_;

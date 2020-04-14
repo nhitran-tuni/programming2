@@ -46,3 +46,31 @@ void Account::add_instance(Instance *new_instance)
     current_.push_back(new_instance);
     std::cout << SIGNED_UP << std::endl;
 }
+
+bool Account::complete_instance(Instance *complete_inst)
+{
+    /** find if student signed up for instance
+     *  if not print error and return false
+     */
+    std::vector<Instance*>::iterator iter = std::find(current_.begin(),
+                                                      current_.end(),
+                                                      complete_inst);
+    if ( iter == current_.end() ){
+        std::cout << NO_SIGNUPS << std::endl;
+        return false;
+    }
+
+    // find course contained instance and add it to complete
+    std::vector<Course*>::iterator it = std::find(completed_.begin(),
+                                                  completed_.end(),
+                                                  complete_inst->get_course());
+    if ( it == completed_.end() ){
+        completed_.push_back(complete_inst->get_course());
+    }
+
+    current_.erase(iter);
+    credit_ += complete_inst->get_course()->get_credits();
+    std::cout << COMPLETED << std::endl;
+
+    return true;
+}

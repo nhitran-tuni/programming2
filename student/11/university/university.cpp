@@ -153,7 +153,27 @@ void University::sign_up_on_course(Params params)
 
 void University::complete_course(Params params)
 {
-
+    if ( courses_.find(params.at(0)) == courses_.end() ){
+        std::cout << CANT_FIND << params.at(0) << std::endl;
+        return;
+    }
+    if ( courses_.at(params.at(0))->has_instance(params.at(1)) ){
+        std::cout << CANT_FIND << params.at(1) << std::endl;
+        return;
+    }
+    if ( accounts_.find(std::stoi(params.at(2))) == accounts_.end() ){
+        std::cout << CANT_FIND << params.at(2) << std::endl;
+        return;
+    }
+    /** check if sigup found
+     *  if false return and ask input again.
+     *  complete course instance
+      */
+    if ( accounts_.at(std::stoi(params.at(2)))->complete_instance(
+             courses_.at(params.at(0))->get_instance(params.at(1)) )){
+        courses_.at(params.at(0))->get_instance(params.at(1))
+                ->complete_student(accounts_.at(std::stoi(params.at(2))));
+    }
 }
 
 void University::print_signups(Params params)

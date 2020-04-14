@@ -57,6 +57,17 @@ public:
      */
     void add_instance(Instance *new_instance);
 
+    /**
+     * @brief complete_instance
+     * @param complete_inst
+     * remove the instance that account complete in current study
+     * add course to completed course
+     * print error if account did not sign up for instance
+     * @return false if account did not sign up for instance of course,
+     *         true otherwise
+     */
+    bool complete_instance(Instance *complete_inst);
+
 private:
     std::string full_name_;
     std::string last_name_;
