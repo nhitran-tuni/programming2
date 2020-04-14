@@ -156,7 +156,7 @@ void University::complete_course(Params params)
         std::cout << CANT_FIND << params.at(0) << std::endl;
         return;
     }
-    if ( courses_.at(params.at(0))->has_instance(params.at(1)) ){
+    if ( !(courses_.at(params.at(0))->has_instance(params.at(1))) ){
         std::cout << CANT_FIND << params.at(1) << std::endl;
         return;
     }
