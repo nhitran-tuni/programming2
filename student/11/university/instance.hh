@@ -41,7 +41,7 @@ public:
      * @param instance_name
      * @param start_date
      */
-    Instance(Course *cour, std::string instance_name, Date start_date);
+    Instance(Course *cour, std::string instance_name, const Date& start_date);
 
     // destructor
     ~Instance();
@@ -66,6 +66,20 @@ public:
      * false otherwise
      */
     bool is_named(std::string name);
+
+    /**
+     * @brief sign_up_student
+     * @param new_student sign up
+     * add student to course implement
+     * print error if student has already signed up for course implement
+     * print error if student has not been in instance but sign up after
+     * starting date of course implement
+     * @param sign_up_date the date student signed up
+     * @return true if student had not been in the courese implement yet
+     * and student signed up in time (same date or before the starting date
+     * of course implement), false otherwise
+     */
+    bool sign_up_student(Account* new_student, const Date& sign_up_date);
 private:
     // pointer to course instance belongs to
     Course* cour_;
@@ -76,7 +90,7 @@ private:
     std::vector<Account*> signup_account_;
 
     // Date instances added
-    Date start_date_;
+    const Date start_date_;
 };
 
 #endif // INSTANCE_HH

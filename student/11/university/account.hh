@@ -49,11 +49,21 @@ public:
      */
     std::string get_email();
 
+    /**
+     * @brief add_instance
+     * @param new_instance to be added
+     * add instance that account had sign up for
+     * print message that account successfully signed up
+     */
+    void add_instance(Instance *new_instance);
+
 private:
     std::string full_name_;
     std::string last_name_;
     std::string first_name_;
     std::string email_;
+    // number of credits of student
+    int credit_;
     const int account_number_;
     std::vector<Instance*> current_;
     std::vector<Course*> completed_;

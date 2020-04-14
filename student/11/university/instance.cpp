@@ -14,7 +14,7 @@
 #include "instance.hh"
 #include "course.hh"
 
-Instance::Instance(Course *cour, std::string instance_name, Date start_date):
+Instance::Instance(Course *cour, std::string instance_name, const Date &start_date):
     cour_(cour),
     instance_name_(instance_name),
     start_date_(start_date)
@@ -49,5 +49,32 @@ void Instance::print_students()
 bool Instance::is_named(std::string name)
 {
     return ( instance_name_ == name );
+}
+
+bool Instance::sign_up_student(Account *new_student, const Date &sign_up_date)
+{
+
+    /** checking if the student has already been in course implement first
+     * if true print error and return
+    */
+    for ( Account* acc : signup_account_ ){
+        if ( acc == new_student ){
+            std::cout << ALREADY_REGISTERED << std::endl;
+            return false;
+        }
+    }
+    /** continue check if student signed in time
+     * if true print error and return
+     * if false add student to course implement
+    */
+    if ( !(sign_up_date.operator <(start_date_) &&
+         sign_up_date.operator ==(start_date_)) ){
+        std::cout << LATE << std::endl;
+        return false;
+    }
+
+    signup_account_.push_back(new_student);
+
+    return true;
 }
 

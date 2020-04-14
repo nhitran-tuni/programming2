@@ -126,7 +126,29 @@ void University::add_instance(Params params)
 
 void University::sign_up_on_course(Params params)
 {
-
+    if ( courses_.find(params.at(0)) == courses_.end() ){
+        std::cout << CANT_FIND << params.at(0) << std::endl;
+        return;
+    }
+    if ( !(courses_.at(params.at(0))->has_instance(params.at(1))) ){
+        std::cout << CANT_FIND << params.at(1) << std::endl;
+        return;
+    }
+    if ( accounts_.find(std::stoi(params.at(2))) == accounts_.end() ){
+        std::cout << CANT_FIND << params.at(2) << std::endl;
+        return;
+    }
+    /** check if given account had signed up yet
+     *  or sign up period is over
+     *  if false return and ask input again,
+     *  add account to course instance otherwise.
+      */
+    if ( courses_.at(params.at(0))->get_instance(params.at(1))
+         ->sign_up_student(accounts_.at(std::stoi(params.at(2))),
+                           utils::today) ){
+        accounts_.at(std::stoi(params.at(2)))->add_instance(
+                    courses_.at(params.at(0))->get_instance(params.at(1)));
+    }
 }
 
 void University::complete_course(Params params)

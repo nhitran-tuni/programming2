@@ -19,7 +19,8 @@ Account::Account(std::string full_name, std::string email, int account_number):
     last_name_(""),
     first_name_(""),
     email_(email),
-    account_number_(account_number)
+    account_number_(account_number),
+    credit_(0)
 {
     std::vector<std::string> name = utils::split(full_name_, ' ');
     last_name_ = name.back();
@@ -38,4 +39,10 @@ void Account::print() const
 std::string Account::get_email()
 {
     return email_;
+}
+
+void Account::add_instance(Instance *new_instance)
+{
+    current_.push_back(new_instance);
+    std::cout << SIGNED_UP << std::endl;
 }
