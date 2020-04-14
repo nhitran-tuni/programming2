@@ -188,12 +188,22 @@ void University::print_signups(Params params)
 
 void University::print_study_state(Params params)
 {
+    if ( accounts_.find(std::stoi(params.at(0))) == accounts_.end() ){
+        std::cout << CANT_FIND << params.at(0) << std::endl;
+        return;
+    }
 
+    accounts_.at(std::stoi(params.at(0)))->print_study_state();
 }
 
 void University::print_completed(Params params)
 {
+    if ( accounts_.find(std::stoi(params.at(0))) == accounts_.end() ){
+        std::cout << CANT_FIND << params.at(0) << std::endl;
+        return;
+    }
 
+    accounts_.at(std::stoi(params.at(0)))->print_complete_course();
 }
 
 void University::set_date(Params params)

@@ -91,4 +91,11 @@ void Instance::complete_student(Account *complete_stud)
     signup_account_.erase(iter);
 }
 
+void Instance::print_current_course()
+{
+    // parameter false for printing instance in line with course information
+    cour_->print_info(false);
+    std::cout << " " << instance_name_ << std::endl;
+}
+
 

@@ -68,6 +68,19 @@ public:
      */
     bool complete_instance(Instance *complete_inst);
 
+    /**
+     * @brief print_study_state
+     * prints curent course instance(s) account signed up,
+     * course account completed and credits account gained
+     */
+    void print_study_state();
+
+    /**
+     * @brief print_complete_course
+     * print all complete course(s) and credits of student
+     */
+    void print_complete_course();
+
 private:
     std::string full_name_;
     std::string last_name_;

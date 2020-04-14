@@ -74,3 +74,23 @@ bool Account::complete_instance(Instance *complete_inst)
 
     return true;
 }
+
+void Account::print_study_state()
+{
+    std::cout << "Current:" << std::endl;
+    for ( Instance* inst: current_ ){
+        inst->print_current_course();
+    }
+
+    std::cout << "Completed:" << std::endl;
+    print_complete_course();
+}
+
+void Account::print_complete_course()
+{
+    for ( Course* cour : completed_ ){
+        cour->print_info(true);
+    }
+
+    std::cout << "Total credits: " << credit_ << std::endl;
+}
