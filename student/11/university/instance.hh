@@ -41,7 +41,7 @@ public:
      * @param instance_name
      * @param start_date
      */
-    Instance(Course *cour, std::string instance_name, const Date& start_date);
+    Instance(Course *cour, std::string instance_name, Date start_date);
 
     // destructor
     ~Instance();
@@ -79,7 +79,7 @@ public:
      * and student signed up in time (same date or before the starting date
      * of course implement), false otherwise
      */
-    bool sign_up_student(Account* new_student, const Date& sign_up_date);
+    bool sign_up_student(Account* new_student, const Date &sign_up_date);
 
     /**
      * @brief get_course
@@ -113,7 +113,7 @@ private:
     std::vector<Account*> signup_account_;
 
     // Date instances added
-    const Date start_date_;
+    Date start_date_;
 };
 
 #endif // INSTANCE_HH

@@ -11,6 +11,7 @@
  * Notes: add implements to all exist functions
  *
  * */
+
 #include "university.hh"
 
 University::University():running_number_(111111)
@@ -118,9 +119,8 @@ void University::add_instance(Params params)
     }
 
     // create new  instance to be add
-    Date start_date = utils::today;
     Instance* n_instance = new Instance(courses_.at(params.at(0)),
-                                        params.at(1), start_date);
+                                        params.at(1), utils::today);
     courses_.at(params.at(0))->new_instance(n_instance);
 }
 
@@ -144,8 +144,7 @@ void University::sign_up_on_course(Params params)
      *  add account to course instance otherwise.
       */
     if ( courses_.at(params.at(0))->get_instance(params.at(1))
-         ->sign_up_student(accounts_.at(std::stoi(params.at(2))),
-                           utils::today) ){
+         ->sign_up_student(accounts_.at(std::stoi(params.at(2))), utils::today) ){
         accounts_.at(std::stoi(params.at(2)))->add_instance(
                     courses_.at(params.at(0))->get_instance(params.at(1)));
     }

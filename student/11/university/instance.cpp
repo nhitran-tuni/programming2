@@ -14,7 +14,7 @@
 #include "instance.hh"
 #include "course.hh"
 
-Instance::Instance(Course *cour, std::string instance_name, const Date &start_date):
+Instance::Instance(Course *cour, std::string instance_name, Date start_date):
     cour_(cour),
     instance_name_(instance_name),
     start_date_(start_date)
@@ -27,33 +27,32 @@ Instance::~Instance()
 
 }
 
-void Instance::print()
-{
-    std::cout << instance_name_ << std::endl;
-
-        std::cout << INDENT << "Starting date: ";
-        start_date_.print();
-        std::cout << std::endl;
-
-        std::cout << INDENT << "Amount of students: "
-                  << signup_account_.size() << std::endl;
-}
-
-void Instance::print_students()
-{
-    for ( Account* acc : signup_account_ ){
-            acc->print();
-    }
-}
-
 bool Instance::is_named(std::string name)
 {
     return ( instance_name_ == name );
 }
 
+void Instance::print()
+{
+    std::cout << instance_name_ << std::endl;
+
+    std::cout << INDENT << "Starting date: ";
+    start_date_.print();
+    std::cout << std::endl;
+
+    std::cout << INDENT << "Amount of students: "
+              << signup_account_.size() << std::endl;
+}
+
+void Instance::print_students()
+{
+    for ( Account* acc : signup_account_ ){
+        acc->print();
+    }
+}
+
 bool Instance::sign_up_student(Account *new_student, const Date &sign_up_date)
 {
-
     /** checking if the student has already been in course implement first
      * if true print error and return
     */
@@ -67,8 +66,7 @@ bool Instance::sign_up_student(Account *new_student, const Date &sign_up_date)
      * if true print error and return
      * if false add student to course implement
     */
-    if ( !(sign_up_date.operator <(start_date_) &&
-         sign_up_date.operator ==(start_date_)) ){
+    if ( start_date_ < sign_up_date ){
         std::cout << LATE << std::endl;
         return false;
     }
@@ -97,5 +95,3 @@ void Instance::print_current_course()
     cour_->print_info(false);
     std::cout << " " << instance_name_ << std::endl;
 }
-
-
