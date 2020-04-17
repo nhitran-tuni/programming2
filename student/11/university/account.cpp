@@ -46,7 +46,7 @@ void Account::add_instance(Instance *new_instance)
     std::cout << SIGNED_UP << std::endl;
 }
 
-bool Account::complete_instance(Instance *complete_inst)
+void Account::complete_instance(Instance *complete_inst)
 {
     /** find if student signed up for instance
      *  if not print error and return false
@@ -56,7 +56,7 @@ bool Account::complete_instance(Instance *complete_inst)
                                                       complete_inst);
     if ( iter == current_.end() ){
         std::cout << NO_SIGNUPS << std::endl;
-        return false;
+        return;
     }
 
     // find course contained instance and add it to complete
@@ -70,8 +70,6 @@ bool Account::complete_instance(Instance *complete_inst)
     current_.erase(iter);
     credit_ += complete_inst->get_course()->get_credits();
     std::cout << COMPLETED << std::endl;
-
-    return true;
 }
 
 void Account::print_study_state()

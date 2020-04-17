@@ -66,7 +66,7 @@ public:
      * @return false if account did not sign up for instance of course,
      *         true otherwise
      */
-    bool complete_instance(Instance *complete_inst);
+    void complete_instance(Instance *complete_inst);
 
     /**
      * @brief print_study_state

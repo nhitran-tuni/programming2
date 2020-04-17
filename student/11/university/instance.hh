@@ -87,13 +87,6 @@ public:
     Course *get_course();
 
     /**
-     * @brief complete_student
-     * @param complete_stud
-     * remove the account completing instance
-     */
-    void complete_student(Account* complete_stud);
-
-    /**
      * @brief print_current_course
      * print course information student current studying in one line
      * including instance

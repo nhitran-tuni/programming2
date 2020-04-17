@@ -164,15 +164,11 @@ void University::complete_course(Params params)
         std::cout << CANT_FIND << params.at(2) << std::endl;
         return;
     }
-    /** check if sigup found
-     *  if false return and ask input again.
-     *  complete course instance
-      */
-    if ( accounts_.at(std::stoi(params.at(2)))->complete_instance(
-             courses_.at(params.at(0))->get_instance(params.at(1)) )){
-        courses_.at(params.at(0))->get_instance(params.at(1))
-                ->complete_student(accounts_.at(std::stoi(params.at(2))));
-    }
+
+    //complete course instance
+    accounts_.at(std::stoi(params.at(2)))
+            ->complete_instance(courses_.at(params.at(0))
+                                ->get_instance(params.at(1)) );
 }
 
 void University::print_signups(Params params)

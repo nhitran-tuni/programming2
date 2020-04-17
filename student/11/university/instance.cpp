@@ -76,14 +76,6 @@ Course *Instance::get_course()
     return cour_;
 }
 
-void Instance::complete_student(Account *complete_stud)
-{
-    std::vector<Account*>::iterator iter = std::find(signup_account_.begin(),
-                                                     signup_account_.end(),
-                                                     complete_stud);
-    signup_account_.erase(iter);
-}
-
 void Instance::print_current_course()
 {
     // parameter false for printing instance in line with course information
