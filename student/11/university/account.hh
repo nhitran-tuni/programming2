@@ -38,6 +38,9 @@ public:
      */
     Account(std::string full_name, std::string email, int account_number);
 
+    //destructor
+    ~Account();
+
     /**
      * @brief print account info on one line
      */

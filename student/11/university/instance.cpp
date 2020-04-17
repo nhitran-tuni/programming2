@@ -24,7 +24,9 @@ Instance::Instance(Course *cour, std::string instance_name, Date start_date):
 
 Instance::~Instance()
 {
-
+    for ( auto signup : signup_account_ ){
+        delete signup;
+    }
 }
 
 bool Instance::is_named(std::string name)
