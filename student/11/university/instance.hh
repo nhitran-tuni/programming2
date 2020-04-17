@@ -43,9 +43,6 @@ public:
      */
     Instance(Course *cour, std::string instance_name, Date start_date);
 
-    // destructor
-    ~Instance();
-
     /**
      * @brief print
      * print starting date, date course added, and number of students signed up

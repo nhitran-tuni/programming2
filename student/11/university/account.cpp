@@ -27,18 +27,6 @@ Account::Account(std::string full_name, std::string email, int account_number):
     first_name_ = name.front();
 }
 
-Account::~Account()
-{
-    for ( auto current : current_ ){
-        delete current;
-    }
-
-    for ( auto completed : completed_ ){
-        delete completed;
-    }
-}
-
-
 void Account::print() const
 {
     std::cout << account_number_ << ": "
