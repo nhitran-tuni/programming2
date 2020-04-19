@@ -21,9 +21,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::count()
 {
-//    std::string weight_str_ = ui->weightLineEdit->text().toStdString();
-//    std::string height_str_ = ui->heightLineEdit->text().toStdString();
-
     double w_ = std::stod(ui->weightLineEdit->text().toStdString());
     double h_ = std::stod(ui->heightLineEdit->text().toStdString());
 
@@ -36,12 +33,11 @@ void MainWindow::count()
     if ( bmi_d_ < 18.5 ){
         QString under_(UNDER.c_str());
         ui->infoTextBrowser->setText(under_);
-    }
-    if ( bmi_d_ > 25 ){
+    } else if ( bmi_d_ > 25 ){
         QString over_(OVER.c_str());
         ui->infoTextBrowser->setText(over_);
+    } else {
+        QString normal_(NORMAL.c_str());
+        ui->infoTextBrowser->setText(normal_);
     }
-    QString normal_(NORMAL.c_str());
-    ui->infoTextBrowser->setText(normal_);
-
 }
