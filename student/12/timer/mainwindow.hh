@@ -23,7 +23,6 @@ public:
 
 private slots:
     // Add your slots here
-    void close();
     void reset();
     void start();
     void stop();

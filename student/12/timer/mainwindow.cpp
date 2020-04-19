@@ -11,7 +11,6 @@ MainWindow::MainWindow(QWidget *parent) :
     second_ = 0;
     minute_ = 0;
 
-    connect(ui->closeButton, &QPushButton::clicked, this, &MainWindow::close);
     connect(ui->resetButton, &QPushButton::clicked, this, &MainWindow::reset);
     connect(ui->startButton, &QPushButton::clicked, this, &MainWindow::start);
     connect(ui->stopButton, &QPushButton::clicked, this, &MainWindow::stop);
@@ -22,11 +21,6 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::close()
-{
-    this->close();
 }
 
 void MainWindow::reset()
