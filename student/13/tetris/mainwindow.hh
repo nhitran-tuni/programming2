@@ -20,8 +20,8 @@
 struct Square
 {
     QGraphicsRectItem* rect;
-    int pos_x_;
-    int pos_y_;
+    int x_;
+    int y_;
     QBrush color;
 };
 
@@ -39,7 +39,14 @@ public:
     void keyPressEvent(QKeyEvent* event) override;
 
 private slots:
-    void draw_tetrino();
+
+    void on_startButton_clicked();
+
+    void on_quitButton_clicked();
+
+    void on_pauseButton_clicked();
+
+    void on_resumeButton_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -88,18 +95,28 @@ private:
 
     QGraphicsRectItem* rect_;
 
-    void tetrino_move();
+    void tetromino_move();
     bool check_movable(int direct);
     enum Direction {LEFT,
                     RIGHT,
-                    DOWN};
+                    DOWN,
+                    OVERLAP};
 
-    std::vector<Square> rect_vect;
-    int random_tet_;
-    void random_tetrino();
+    std::vector<Square> all_square;
+//    int random_tet_;
+    void random_tetromino();
 
     void draw();
 
+//    void rotate_current_tet();
+
+    void new_tetromino();
+
+    int score_;
+    int GAIN_SCORE = 10;
+
+    bool is_running_;
+/*
 //    const int type_I[4][4] = {
 //                            0,1,0,0,
 //                            0,1,0,0,
@@ -149,6 +166,7 @@ private:
 //                            0,0,0,0
 
 //    };
+*/
 };
 
 #endif // MAINWINDOW_HH
