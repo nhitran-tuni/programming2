@@ -12,6 +12,7 @@
 #include "ui_mainwindow.h"
 
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -61,6 +62,43 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::keyPressEvent(QKeyEvent* event)
+{
+//    qreal deltaX = static_cast<qreal>(0);
+//    qreal deltaY = static_cast<qreal>(0);
+
+    if ( event->key() == Qt::Key_Left || event->key() == Qt::Key_A ){
+        if ( check_movable(LEFT) ){
+            for ( unsigned int i = rect_vect.size() - 4; i < rect_vect.size(); i++ ){
+                rect_vect.at(i).pos_x_ -= SQUARE_SIDE;
+            }
+        }
+    }
+
+    if ( event->key() == Qt::Key_Right || event->key() == Qt::Key_D ){
+        if ( check_movable(RIGHT) ){
+            for ( unsigned int i = rect_vect.size() - 4; i < rect_vect.size(); i++ ){
+                rect_vect.at(i).pos_x_ += SQUARE_SIDE;
+            }
+        }
+    }
+
+    if ( event->key() == Qt::Key_Space ){
+        if ( check_movable(DOWN) ){
+            for ( unsigned int i = rect_vect.size() - 4; i < rect_vect.size(); i++ ){
+                rect_vect.at(i).pos_y_ += SQUARE_SIDE;
+            }
+        }
+    }
+    draw();
+
+//    for ( unsigned int i = rect_vect.size() - 4; i < rect_vect.size(); i++ ){
+//        rect_vect.at(i).rect->moveBy(deltaX,deltaY);
+//        rect_vect.at(i).pos_x_ = rect_vect.at(i).rect->x();
+//        rect_vect.at(i).pos_y_ = rect_vect.at(i).rect->y();
+//    }
+}
+
 void MainWindow::draw_tetrino()
 {
     timer_.start(1000);
@@ -95,9 +133,9 @@ void MainWindow::draw_tetrino()
 
 void MainWindow::tetrino_move()
 {
-//    for ( QGraphicsRectItem* ele_rect : rect_vect ){
-//        qreal current_x = rect_vect.front()->x();
-//        qreal current_y = rect_vect.front()->y();
+//    for ( auto ele_rect : rect_vect ){
+//        qreal current_x = ele_rect.rect->x();
+//        qreal current_y = ele_rect.rect->y();
 
 //        qreal deltaX, deltaY;
 
@@ -105,19 +143,142 @@ void MainWindow::tetrino_move()
 //        deltaX = 0;
 
 //        current_y += deltaY;
+//        current_x += deltaX;
 //        QRectF rect = scene_->sceneRect();
 //        if(rect.contains(current_x, current_y)) {
-//            ele_rect->moveBy(deltaX, deltaY);
+//            ele_rect.rect->moveBy(deltaX, deltaY);
 //        } else {
 //            timer_.stop();
 //        }
 //    }
+//    while ( check_movable(DOWN) ){
+//        qreal deltaY, deltaX;
+//        deltaY = static_cast<qreal>(SQUARE_SIDE);
+//        deltaX = static_cast<qreal>(0);
+
+//        for ( unsigned int i = rect_vect.size() - 4; i < rect_vect.size(); i++ ){
+//            rect_vect.at(i).rect->moveBy(0,deltaY);
+//            rect_vect.at(i).pos_x_ = rect_vect.at(i).rect->x();
+//            rect_vect.at(i).pos_y_ = rect_vect.at(i).rect->y();
+//        }
+
+//        std::vector<Square>::iterator ite;
+
+//        for ( ite = rect_vect.end() - 3; ite != rect_vect.end(); ite++ ){
+//            ite->rect->moveBy(deltaX, deltaY);
+//        }
+//    }
+//    timer_.stop();
+    while ( check_movable(DOWN) ){
+        for ( unsigned int i = rect_vect.size() - 4; i < rect_vect.size(); i++ ){
+            rect_vect.at(i).pos_y_ += SQUARE_SIDE;
+        }
+        draw();
+    }
+    timer_.stop();
 }
+
+void MainWindow::draw()
+{
+    QPen blackPen(Qt::black);
+    blackPen.setWidth(1.5);
+
+    scene_->clear();
+
+    for ( auto item : rect_vect ){
+        item.rect = scene_->addRect(item.pos_x_, item.pos_y_,
+                                    SQUARE_SIDE, SQUARE_SIDE,
+                                    blackPen, item.color);
+    }
+}
+
+bool MainWindow::check_movable(int direct)
+{
+//    std::vector<Square>::iterator ite_1, ite_2;
+
+//    for ( ite_1 =  rect_vect.begin(); ite_1 != rect_vect.end() - 3; ite_1++ ){
+//        for ( ite_2 = rect_vect.end() - 3; ite_2 != rect_vect.end(); ite_2++ ){
+//            if ( direct == LEFT ){
+//                if ( ite_2->pos_x_ - SQUARE_SIDE == BORDER_LEFT ){
+//                    return false;
+//                }
+//                if ( ite_2->pos_y_ == ite_1->pos_y_ &&
+//                     ite_2->pos_x_ - SQUARE_SIDE == ite_1->pos_x_){
+//                    return false;
+//                }
+//            } else if (direct == RIGHT){
+//                if ( ite_2->pos_x_ + SQUARE_SIDE == BORDER_RIGHT ){
+//                    return false;
+//                }
+//                if ( ite_2->pos_y_ == ite_1->pos_y_ &&
+//                     ite_2->pos_x_ + SQUARE_SIDE == ite_1->pos_x_){
+//                    return false;
+//                }
+//            } else if (direct == DOWN){
+//                if ( ite_2->pos_y_ + SQUARE_SIDE == BORDER_DOWN ){
+//                    return false;
+//                }
+//                if ( ite_2->pos_x_ == ite_1->pos_x_ &&
+//                     ite_2->pos_y_ + SQUARE_SIDE == ite_1->pos_y_){
+//                    return false;
+//                }
+//            }
+//        }
+//    }
+    if ( rect_vect.size() == 4 ){
+        for ( unsigned int j = rect_vect.size() - 4; j < rect_vect.size(); j++ ){
+            if ( direct == LEFT ){
+                if ( rect_vect.at(j).pos_x_ == BORDER_LEFT ){
+                    return false;
+                }
+            } else if (direct == RIGHT){
+                if ( rect_vect.at(j).pos_x_ + SQUARE_SIDE == BORDER_RIGHT ){
+                    return false;
+                }
+            } else if (direct == DOWN){
+                if ( rect_vect.at(j).pos_y_ + SQUARE_SIDE == BORDER_DOWN ){
+                    return false;
+                }
+            }
+        }
+    }
+    for ( unsigned int i = 0; i < rect_vect.size() - 4; i++ ){
+        for ( unsigned int j = rect_vect.size() - 4; j < rect_vect.size(); j++ ){
+            if ( direct == LEFT ){
+                if ( rect_vect.at(j).pos_x_ == BORDER_LEFT ){
+                    return false;
+                }
+                if ( rect_vect.at(j).pos_y_ == rect_vect.at(i).pos_y_ &&
+                     rect_vect.at(j).pos_x_ - SQUARE_SIDE == rect_vect.at(i).pos_x_){
+                    return false;
+                }
+            } else if (direct == RIGHT){
+                if ( rect_vect.at(j).pos_x_ + SQUARE_SIDE == BORDER_RIGHT ){
+                    return false;
+                }
+                if ( rect_vect.at(j).pos_y_ == rect_vect.at(i).pos_y_ &&
+                     rect_vect.at(j).pos_x_ + SQUARE_SIDE == rect_vect.at(i).pos_x_){
+                    return false;
+                }
+            } else if (direct == DOWN){
+                if ( rect_vect.at(j).pos_y_ + SQUARE_SIDE == BORDER_DOWN ){
+                    return false;
+                }
+                if ( rect_vect.at(j).pos_x_ == rect_vect.at(i).pos_x_ &&
+                     rect_vect.at(j).pos_y_ + SQUARE_SIDE == rect_vect.at(i).pos_y_){
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+
 
 void MainWindow::random_tetrino()
 {
     random_tet_ = int(distr(randomEng));
-    const int in_x = 110;
+    const int in_x = 120;
     const int in_y = 0;
 
     QBrush redBrush(Qt::red);
@@ -165,4 +326,6 @@ void MainWindow::random_tetrino()
         rect_vect.push_back( {rect_, in_x + SQUARE_SIDE, in_y + SQUARE_SIDE, magentaBrush} );
     }
 }
+
+
 

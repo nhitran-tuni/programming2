@@ -15,6 +15,7 @@
 #include <vector>
 #include <random>
 #include <QTimer>
+#include <QKeyEvent>
 
 struct Square
 {
@@ -35,6 +36,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void keyPressEvent(QKeyEvent* event) override;
 
 private slots:
     void draw_tetrino();
@@ -87,10 +89,16 @@ private:
     QGraphicsRectItem* rect_;
 
     void tetrino_move();
+    bool check_movable(int direct);
+    enum Direction {LEFT,
+                    RIGHT,
+                    DOWN};
 
     std::vector<Square> rect_vect;
     int random_tet_;
     void random_tetrino();
+
+    void draw();
 
 //    const int type_I[4][4] = {
 //                            0,1,0,0,
