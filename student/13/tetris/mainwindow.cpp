@@ -67,7 +67,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 //    qreal deltaX = static_cast<qreal>(0);
 //    qreal deltaY = static_cast<qreal>(0);
 
-    if ( event->key() == Qt::Key_Left || event->key() == Qt::Key_A ){
+    if ( event->key() == Qt::LeftButton || event->key() == Qt::Key_A ){
         if ( check_movable(LEFT) ){
             for ( unsigned int i = rect_vect.size() - 4; i < rect_vect.size(); i++ ){
                 rect_vect.at(i).pos_x_ -= SQUARE_SIDE;
@@ -169,13 +169,15 @@ void MainWindow::tetrino_move()
 //        }
 //    }
 //    timer_.stop();
-    while ( check_movable(DOWN) ){
+    if ( check_movable(DOWN) ){
         for ( unsigned int i = rect_vect.size() - 4; i < rect_vect.size(); i++ ){
             rect_vect.at(i).pos_y_ += SQUARE_SIDE;
+            draw();
         }
-        draw();
+//        draw();
+    } else {
+        timer_.stop();
     }
-    timer_.stop();
 }
 
 void MainWindow::draw()
