@@ -96,9 +96,10 @@ private:
     QGraphicsRectItem* rect_;
 
     void tetromino_move();
-    bool check_movable(int direct);
+    bool check_movable(int direct, bool rotate = true);
     enum Direction {LEFT,
                     RIGHT,
+                    UP,
                     DOWN,
                     OVERLAP};
 
@@ -108,9 +109,11 @@ private:
 
     void draw();
 
-//    void rotate_current_tet();
+    void rotate_current_tet();
 
     void new_tetromino();
+
+    void game_over();
 
     int score_;
     int GAIN_SCORE = 10;
