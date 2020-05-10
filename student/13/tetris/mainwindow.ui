@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>701</width>
-    <height>691</height>
+    <width>697</width>
+    <height>735</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,9 +28,9 @@
     <property name="geometry">
      <rect>
       <x>380</x>
-      <y>450</y>
-      <width>84</width>
-      <height>28</height>
+      <y>461</y>
+      <width>230</width>
+      <height>40</height>
      </rect>
     </property>
     <property name="text">
@@ -40,10 +40,10 @@
    <widget class="QPushButton" name="quitButton">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>450</y>
-      <width>84</width>
-      <height>28</height>
+      <x>520</x>
+      <y>581</y>
+      <width>90</width>
+      <height>40</height>
      </rect>
     </property>
     <property name="text">
@@ -54,9 +54,9 @@
     <property name="geometry">
      <rect>
       <x>380</x>
-      <y>530</y>
-      <width>84</width>
-      <height>28</height>
+      <y>521</y>
+      <width>90</width>
+      <height>40</height>
      </rect>
     </property>
     <property name="text">
@@ -66,10 +66,10 @@
    <widget class="QPushButton" name="resumeButton">
     <property name="geometry">
      <rect>
-      <x>530</x>
-      <y>530</y>
-      <width>84</width>
-      <height>28</height>
+      <x>520</x>
+      <y>521</y>
+      <width>90</width>
+      <height>40</height>
      </rect>
     </property>
     <property name="text">
@@ -80,23 +80,81 @@
     <property name="geometry">
      <rect>
       <x>380</x>
-      <y>330</y>
-      <width>141</width>
-      <height>61</height>
+      <y>351</y>
+      <width>230</width>
+      <height>70</height>
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="score">
     <property name="geometry">
      <rect>
       <x>380</x>
-      <y>300</y>
-      <width>63</width>
-      <height>20</height>
+      <y>320</y>
+      <width>81</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
      <string>SCORE</string>
+    </property>
+   </widget>
+   <widget class="QGraphicsView" name="nextTetGraphicsView">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>150</y>
+      <width>120</width>
+      <height>80</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="gameStatusTextBrowser">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>40</y>
+      <width>391</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>41</pointsize>
+     </font>
+    </property>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Cantarell'; font-size:41pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="restartButton">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>60</y>
+      <width>90</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>RESTART</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="resetButton">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>581</y>
+      <width>90</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>RESET</string>
     </property>
    </widget>
   </widget>
@@ -105,7 +163,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>701</width>
+     <width>697</width>
      <height>25</height>
     </rect>
    </property>

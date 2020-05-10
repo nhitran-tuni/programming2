@@ -48,6 +48,10 @@ private slots:
 
     void on_resumeButton_clicked();
 
+    void on_resetButton_clicked();
+
+    void on_restartButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -91,12 +95,19 @@ private:
     std::uniform_int_distribution<int> distr;
 
     // More constants, attibutes, and methods
+    QGraphicsScene* next_scene_;
+
+    const int RIGHT_NEXT = 120;
+    const int DOWN_NEXT = 80;
+    const int COLUMN_NEXT = RIGHT_NEXT / SQUARE_SIDE;
+    const int ROW_NEXT = DOWN_NEXT / SQUARE_SIDE;
+
     QTimer timer_;
 
     QGraphicsRectItem* rect_;
 
     void tetromino_move();
-    bool check_movable(int direct, bool rotate = true);
+    bool check_movable(int direct, bool not_rotate = true);
     enum Direction {LEFT,
                     RIGHT,
                     UP,
@@ -104,6 +115,7 @@ private:
                     OVERLAP};
 
     std::vector<Square> all_square;
+//    std::vector<Square> next_square;
 //    int random_tet_;
     void random_tetromino();
 
@@ -116,7 +128,7 @@ private:
     void game_over();
 
     int score_;
-    int GAIN_SCORE = 10;
+    const int GAIN_SCORE = 10;
 
     bool is_running_;
 /*

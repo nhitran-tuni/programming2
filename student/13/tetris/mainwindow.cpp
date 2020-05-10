@@ -51,12 +51,27 @@ MainWindow::MainWindow(QWidget *parent) :
     // tetromino by calling: distr(randomEng) in a suitable method.
 
     // Add more initial settings and connect calls, when needed.
-//    timer_.setSingleShot(false);
+    next_scene_ = new QGraphicsScene(this);
+
+    int left_next = 380;
+    int top_next = 150;
+
+    ui->nextTetGraphicsView->setGeometry(left_next, top_next,
+                                         RIGHT_NEXT + 2, DOWN_NEXT + 2);
+    ui->nextTetGraphicsView->setScene(next_scene_);
+    next_scene_->setSceneRect(0, 0, RIGHT_NEXT - 1, DOWN_NEXT - 1);
+
     ui->quitButton->setDisabled(true);
     ui->pauseButton->setDisabled(true);
     ui->resumeButton->setDisabled(true);
+    ui->restartButton->setDisabled(true);
+    ui->resetButton->setDisabled(true);
+
+    ui->gameStatusTextBrowser->setText("-TETRIS GAME-");
 
     is_running_ = true;
+
+    score_ = 0;
 
     connect(&timer_, &QTimer::timeout, this, &MainWindow::tetromino_move);
 }
@@ -73,16 +88,16 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     switch (event->key()) {
     case Qt::Key_A:
         if ( check_movable(LEFT) ){
-            for ( unsigned int i = all_square.size() - 4;
-                  i < all_square.size(); i++ ){
+            for ( unsigned int i = all_square.size() - 8;
+                  i < all_square.size() - 4; i++ ){
                 all_square.at(i).x_ -= 1;
             }
         }
         break;
     case Qt::Key_D:
         if ( check_movable(RIGHT) ){
-            for ( unsigned int i = all_square.size() - 4;
-                  i < all_square.size(); i++ ){
+            for ( unsigned int i = all_square.size() - 8;
+                  i < all_square.size() - 4; i++ ){
                 all_square.at(i).x_ += 1;
             }
         }
@@ -90,8 +105,8 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 
     case Qt::Key_S:
         if ( check_movable(DOWN) ){
-            for ( unsigned int i = all_square.size() - 4;
-                  i < all_square.size(); i++ ){
+            for ( unsigned int i = all_square.size() - 8;
+                  i < all_square.size() - 4; i++ ){
                 all_square.at(i).y_ += 1;
             }
         }
@@ -190,10 +205,9 @@ void MainWindow::tetromino_move()
 //    timer_.stop();
     */
     if ( check_movable(DOWN) ){
-        for ( unsigned int i = all_square.size() - 4;
-              i < all_square.size(); i++ ){
+        for ( unsigned int i = all_square.size() - 8;
+              i < all_square.size() - 4; i++ ){
             all_square.at(i).y_ += 1;
-//            draw();
         }
         draw();
     } else {
@@ -207,27 +221,51 @@ void MainWindow::draw()
 {
     QPen blackPen(Qt::black);
     blackPen.setWidth(1.5);
+/*
+//    s->clear();
+
+//    for ( auto item : v ){
+//        item.rect = s->addRect(item.x_*SQUARE_SIDE, item.y_*SQUARE_SIDE,
+//                                    SQUARE_SIDE, SQUARE_SIDE,
+//                                    blackPen, item.color);
+//    }
+*/
 
     scene_->clear();
 
-    for ( auto item : all_square ){
-        item.rect = scene_->addRect(item.x_*SQUARE_SIDE, item.y_*SQUARE_SIDE,
-                                    SQUARE_SIDE, SQUARE_SIDE,
-                                    blackPen, item.color);
+    for ( unsigned int i = 0;
+          i < all_square.size() - 4; i++ ){
+        all_square.at(i).rect = scene_->addRect(all_square.at(i).x_*SQUARE_SIDE,
+                                                all_square.at(i).y_*SQUARE_SIDE,
+                                                SQUARE_SIDE, SQUARE_SIDE,
+                                                blackPen, all_square.at(i).color);
     }
+
+    next_scene_->clear();
+
+    for ( unsigned int i = all_square.size() - 4;
+          i < all_square.size(); i++ ){
+        next_scene_->addRect((all_square.at(i).x_ - 4)*SQUARE_SIDE,
+                            (all_square.at(i).y_ + 1)*SQUARE_SIDE,
+                            SQUARE_SIDE, SQUARE_SIDE,
+                            blackPen, all_square.at(i).color);
+    }
+
+
 }
 
 void MainWindow::rotate_current_tet()
 {
-    int pivotX = all_square.back().x_;
-    int pivotY = all_square.back().y_;
+    int pivotX = all_square.at(all_square.size() - 5).x_;
+    int pivotY = all_square.at(all_square.size() - 5).y_;
 
     std::vector<Square> current_rotate;
 
-    if ( all_square.back().color == Qt::lightGray ) return;
+    if ( all_square.at(all_square.size() - 5).color ==
+         Qt::lightGray ) return;
 
-    for ( unsigned int i = all_square.size() - 4;
-          i < all_square.size(); i++ ){
+    for ( unsigned int i = all_square.size() - 8;
+          i < all_square.size() - 4; i++ ){
         int tempX = all_square.at(i).x_;
         current_rotate.push_back(all_square.at(i));
 
@@ -236,16 +274,14 @@ void MainWindow::rotate_current_tet()
     }
 
     if ( !check_movable(LEFT) || !check_movable(RIGHT) ||
-           !check_movable(UP) || !check_movable(DOWN) ||
-           !check_movable(OVERLAP, false)){
-        for (int i = 0; i < 4; i++){
-            all_square.pop_back();
-        }
-        for (auto item : current_rotate){
-            all_square.push_back(item);
+           !check_movable(OVERLAP, false) || !check_movable(DOWN) ||
+           !check_movable(UP)){
+        for ( unsigned int i = all_square.size() - 8;
+              i < all_square.size() - 4; i++ ){
+            all_square.at(i) = current_rotate.front();
+            current_rotate.erase(current_rotate.begin());
         }
     }
-    current_rotate.clear();
 }
 /*
 //void MainWindow::rotate_current_tet()
@@ -260,15 +296,23 @@ void MainWindow::rotate_current_tet()
 
 void MainWindow::new_tetromino()
 {
-    if ( !check_movable(DOWN) ){
-        timer_.start(1000);
-        random_tetromino();
-        if ( check_movable(OVERLAP, true) ){
-            draw();
-        } else {
-            game_over();
-        }
+
+    timer_.start(1000);
+    /*
+//    for ( auto item : next_square ){
+//        item.x_ += 3;
+//        all_square.push_back(item);
+//    }
+//    next_square.clear();
+*/
+    random_tetromino();
+    if ( check_movable(OVERLAP, true) && check_movable(UP) ){
+        score_ += GAIN_SCORE;
+        draw();
+    } else {
+        game_over();
     }
+
 }
 
 void MainWindow::game_over()
@@ -280,11 +324,14 @@ void MainWindow::game_over()
 */
     score_ -=GAIN_SCORE;
     timer_.stop();
+    ui->gameStatusTextBrowser->setText(" -GAME OVER-");
+    ui->restartButton->setDisabled(false);
     ui->quitButton->setDisabled(true);
     ui->pauseButton->setDisabled(true);
+    ui->resetButton->setDisabled(true);
 }
 
-bool MainWindow::check_movable(int direct, bool rotate)
+bool MainWindow::check_movable(int direct, bool not_rotate)
 {
     /*
 //    std::vector<Square>::iterator ite_1, ite_2;
@@ -319,81 +366,74 @@ bool MainWindow::check_movable(int direct, bool rotate)
 //        }
 //    }
     */
-    if ( all_square.size() == 4 ){
-        for ( unsigned int i = all_square.size() - 4;
-              i < all_square.size(); i++ ){
-            switch (direct) {
-            case LEFT:
-                if ( all_square.at(i).x_ <= BORDER_LEFT ){
-                    return false;
+    if ( all_square.size() > 8 ){
+        for ( unsigned int i = 0; i < all_square.size() - 8; i++ ){
+            for ( unsigned int j = all_square.size() - 8;
+                  j < all_square.size() - 4; j++ ){
+                switch (direct) {
+                case LEFT:
+                    if ( all_square.at(j).y_ == all_square.at(i).y_ &&
+                         all_square.at(j).x_ - 1 == all_square.at(i).x_){
+                        return false;
+                    }
+                    break;
+                case RIGHT:
+                    if ( all_square.at(j).y_ == all_square.at(i).y_ &&
+                         all_square.at(j).x_ + 1 == all_square.at(i).x_){
+                        return false;
+                    }
+                    break;
+                case DOWN:
+                    if ( all_square.at(j).x_ == all_square.at(i).x_ &&
+                         all_square.at(j).y_ + 1 == all_square.at(i).y_){
+                        return false;
+                    }
+                    break;
+                case UP:
+                    if ( all_square.at(i).y_ <= BORDER_UP ){
+                        if ( not_rotate ) return is_running_ = false;
+                        return false;
+                    }
+                    break;
+                case OVERLAP:
+                    if ( all_square.at(j).x_ == all_square.at(i).x_ &&
+                         all_square.at(j).y_ == all_square.at(i).y_){
+                        if ( not_rotate ) return is_running_ = false;
+                        return false;
+                    }
+                    break;
+                default:
+                    break;
                 }
-                break;
-            case RIGHT:
-                if ( all_square.at(i).x_ >= COLUMNS - 1 ){
-                    return false;
-                }
-                break;
-            case DOWN:
-                if ( all_square.at(i).y_ >= ROWS - 1 ){
-                    return false;
-                }
-                break;
-            case UP:
-                if ( all_square.at(i).y_ < BORDER_UP ){
-                    return false;
-                }
-                break;
-            default:
-                break;
             }
         }
     }
-    for ( unsigned int i = 0; i < all_square.size() - 4; i++ ){
-        for ( unsigned int j = all_square.size() - 4;
-              j < all_square.size(); j++ ){
-            switch (direct) {
-            case LEFT:
-                if ( all_square.at(j).x_ <= BORDER_LEFT ){
-                    return false;
-                }
-                if ( all_square.at(j).y_ == all_square.at(i).y_ &&
-                     all_square.at(j).x_ - 1 == all_square.at(i).x_){
-                    return false;
-                }
-                break;
-            case RIGHT:
-                if ( all_square.at(j).x_ >= COLUMNS - 1){
-                    return false;
-                }
-                if ( all_square.at(j).y_ == all_square.at(i).y_ &&
-                     all_square.at(j).x_ + 1 == all_square.at(i).x_){
-                    return false;
-                }
-                break;
-            case DOWN:
-                if ( all_square.at(j).y_ >= ROWS - 1 ){
-                    return false;
-                }
-                if ( all_square.at(j).x_ == all_square.at(i).x_ &&
-                     all_square.at(j).y_ + 1 == all_square.at(i).y_){
-                    return false;
-                }
-                break;
-            case UP:
-                if ( all_square.at(i).y_ < BORDER_UP ){
-                    return false;
-                }
-                break;
-            case OVERLAP:
-                if ( all_square.at(j).x_ == all_square.at(i).x_ &&
-                     all_square.at(j).y_ == all_square.at(i).y_){
-                    if ( rotate ) return is_running_ = false;
-                    return false;
-                }
-                break;
-            default:
-                break;
+
+    for ( unsigned int i = all_square.size() - 8;
+          i < all_square.size() - 4; i++ ){
+        switch (direct) {
+        case LEFT:
+            if ( all_square.at(i).x_ <= BORDER_LEFT ){
+                return false;
             }
+            break;
+        case RIGHT:
+            if ( all_square.at(i).x_ >= COLUMNS - 1 ){
+                return false;
+            }
+            break;
+        case DOWN:
+            if ( all_square.at(i).y_ >= ROWS - 1 ){
+                return false;
+            }
+            break;
+        case UP:
+            if ( all_square.at(i).y_ < BORDER_UP ){
+                return false;
+            }
+            break;
+        default:
+            break;
         }
     }
     return true;
@@ -401,11 +441,8 @@ bool MainWindow::check_movable(int direct, bool rotate)
 
 void MainWindow::random_tetromino()
 {
-//    random_tet_ = int(distr(randomEng));
-    const int in_x = COLUMNS / 2;
+    int in_x = COLUMNS / 2;
     const int in_y = BORDER_UP;
-
-    score_ += GAIN_SCORE;
 
     QBrush redBrush(Qt::red);
     QBrush blueBrush(Qt::blue);
@@ -466,11 +503,18 @@ void MainWindow::random_tetromino()
 void MainWindow::on_startButton_clicked()
 {
     timer_.start(1000);
+
+    ui->scorelcdNumber->display(score_);
+
+    score_ += GAIN_SCORE;
+    random_tetromino();
     random_tetromino();
     draw();
+
     ui->startButton->setDisabled(true);
     ui->pauseButton->setDisabled(false);
     ui->quitButton->setDisabled(false);
+    ui->resetButton->setDisabled(false);
 }
 
 void MainWindow::on_quitButton_clicked()
@@ -492,4 +536,20 @@ void MainWindow::on_resumeButton_clicked()
     is_running_ = true;
     ui->resumeButton->setDisabled(true);
     ui->pauseButton->setDisabled(false);
+}
+
+void MainWindow::on_resetButton_clicked()
+{
+    all_square.clear();
+    scene_->clear();
+    next_scene_->clear();
+    score_ = 0;
+    on_startButton_clicked();
+}
+
+void MainWindow::on_restartButton_clicked()
+{
+    is_running_ = true;
+    ui->gameStatusTextBrowser->setText("-TETRIS GAME-");
+    on_resetButton_clicked();
 }
