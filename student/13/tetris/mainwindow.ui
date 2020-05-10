@@ -170,7 +170,7 @@ p, li { white-space: pre-wrap; }
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>GAME HARD LEVEL</string>
+        <string>GAME LEVEL:</string>
        </property>
       </widget>
      </item>

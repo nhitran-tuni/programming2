@@ -153,6 +153,9 @@ void MainWindow::tetromino_move()
         // Display the current score
         ui->scorelcdNumber->display(score_);
 
+        // Advance the game if needed
+        advance_game();
+
         // When previous tetromino stops, next tetronimo appears
         // if the game is not over.
         new_tetromino();
@@ -284,6 +287,15 @@ void MainWindow::delete_full_row()
     // There more rows are removed, the more scores gained (by multiplication).
     update_gameboard();
     score_ += full_row*full_row*GAIN_SCORE;
+}
+
+void MainWindow::advance_game()
+{
+    // The speed of falling will increase ( interval_ decreses
+    // by ADVANCE) if the score increases by ADVANCE_SCORE.
+    if ( interval_ > ADVANCE && score_ % ADVANCE_SCORE == 0 ){
+        interval_ -= ADVANCE;
+    }
 }
 
 void MainWindow::game_over()
@@ -523,6 +535,10 @@ void MainWindow::on_resetButton_clicked()
     ui->easyRadioButton->setDisabled(false);
     ui->mediumRadioButton->setDisabled(false);
     ui->hardRadioButton->setDisabled(false);
+
+    //Can start game again with previous level
+    ui->startButton->setDisabled(false);
+
     // PauseButton cannot be pressed before chosing game level.
     ui->pauseButton->setDisabled(true);
 }

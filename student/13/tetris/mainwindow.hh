@@ -147,7 +147,11 @@ private:
     int interval_;
     const int EASY = 1000;
     const int MEDIUM = 600;
-    const int HARD = 100;
+    const int HARD = 400;
+    // Constant for increase the speed and also limit for the falling speed.
+    const int ADVANCE = 50;
+    // If score increses by ADVANCE_SCORE, the game advances
+    const int ADVANCE_SCORE = 300;
 
     /**
      * @brief tetromino_move
@@ -198,6 +202,12 @@ private:
      * All needed squares change coordination by decreasing by SQUARE_SIDE.
      */
     void delete_full_row();
+
+    /**
+     * @brief advance_game
+     * The falling speed increase when the game advances.
+     */
+    void advance_game();
 
     /**
      * @brief game_over
