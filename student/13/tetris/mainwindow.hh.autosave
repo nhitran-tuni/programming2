@@ -147,7 +147,7 @@ private:
     int interval_;
     const int EASY = 1000;
     const int MEDIUM = 600;
-    const int HARD = 100;
+    const int HARD = 400;
 
     /**
      * @brief tetromino_move
