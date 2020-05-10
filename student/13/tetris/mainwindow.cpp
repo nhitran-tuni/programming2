@@ -211,8 +211,9 @@ void MainWindow::tetromino_move()
         }
         draw();
     } else {
-        ui->scorelcdNumber->display(score_);
         timer_.stop();
+        delete_full_row();
+        ui->scorelcdNumber->display(score_);
         new_tetromino();
     }
 }
@@ -312,7 +313,37 @@ void MainWindow::new_tetromino()
     } else {
         game_over();
     }
+}
 
+void MainWindow::delete_full_row()
+{
+    std::vector<int> same_row;
+    int full_row = 0;
+
+    for ( int y = 0; y < ROWS; y++ ){
+        for ( unsigned int i = 0; i < all_square.size() - 4; i++ ){
+            if( all_square.at(i).y_ == y ){
+                same_row.push_back(i);
+            }
+        }
+        if ( int(same_row.size()) == COLUMNS ){
+            while( !(same_row.empty()) ){
+                all_square.erase(all_square.begin() + same_row.back());
+                same_row.pop_back();
+            }
+            if ( all_square.size() > 4 ){
+                for( unsigned int i = 0; i < all_square.size() - 4; i++){
+                    if ( all_square.at(i).y_ < y ){
+                        all_square.at(i).y_ += 1;
+                    }
+                }
+            }
+            full_row += 1;
+        }
+        same_row.clear();
+        draw();
+    }
+    score_ += full_row*full_row*GAIN_SCORE;
 }
 
 void MainWindow::game_over()

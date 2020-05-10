@@ -1,4 +1,4 @@
-/* Program author
+﻿/* Program author
 * Name: Thuy Phuong Nhi Tran
 * Student number: 291937
 * UserID: mpthtr
@@ -15,6 +15,7 @@
 #include <vector>
 #include <random>
 #include <QTimer>
+#include <algorithm>
 #include <QKeyEvent>
 
 struct Square
@@ -124,6 +125,8 @@ private:
     void rotate_current_tet();
 
     void new_tetromino();
+
+    void delete_full_row();
 
     void game_over();
 
