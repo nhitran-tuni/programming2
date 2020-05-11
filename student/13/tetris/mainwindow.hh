@@ -151,7 +151,10 @@ private:
     // Constant for increase the speed and also limit for the falling speed.
     const int ADVANCE = 50;
     // If score increses by ADVANCE_SCORE, the game advances
-    const int ADVANCE_SCORE = 300;
+    const int ADVANCE_SCORE = 350;
+
+    // When the speed increases, so does level
+    int level_;
 
     /**
      * @brief tetromino_move

@@ -75,10 +75,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->gameStatusTextBrowser->setText("-TETRIS GAME-");
 
-    is_running_ = true;
+    // First, the game is not running.
+    is_running_ = false;
 
     // The initial score is 0.
     score_ = 0;
+
+    //Initial level is 1
+    level_ = 1;
 
     // Timer fires every particular interval
     //depending on the hard level of the game
@@ -99,28 +103,40 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     switch (event->key()) {
     // Move tetromino to the right by SQUARE_SIDE.
     case Qt::Key_A:
-        if ( check_movable(LEFT) ){
-            for ( unsigned int i = all_square.size() - 2 * SQUARE_NUM;
-                  i < all_square.size() - SQUARE_NUM; i++ ){
-                all_square.at(i).x_ -= 1;
-            }
+        for ( unsigned int i = all_square.size() - 2 * SQUARE_NUM;
+              i < all_square.size() - SQUARE_NUM; i++ ){
+            all_square.at(i).x_ -= 1;
         }
-        break;
-    // Move tetromino to the left by SQUARE_SIDE.
-    case Qt::Key_D:
-        if ( check_movable(RIGHT) ){
+        if ( !check_movable(LEFT) || !check_movable(OVERLAP) ){
             for ( unsigned int i = all_square.size() - 2 * SQUARE_NUM;
                   i < all_square.size() - SQUARE_NUM; i++ ){
                 all_square.at(i).x_ += 1;
             }
         }
         break;
-    // Move tetromino to the down by SQUARE_SIDE.
-    case Qt::Key_S:
-        if ( check_movable(DOWN) ){
+    // Move tetromino to the left by SQUARE_SIDE.
+    case Qt::Key_D:
+        for ( unsigned int i = all_square.size() - 2 * SQUARE_NUM;
+              i < all_square.size() - SQUARE_NUM; i++ ){
+            all_square.at(i).x_ += 1;
+        }
+        if ( !check_movable(RIGHT) || !check_movable(OVERLAP)){
             for ( unsigned int i = all_square.size() - 2 * SQUARE_NUM;
                   i < all_square.size() - SQUARE_NUM; i++ ){
-                all_square.at(i).y_ += 1;
+                all_square.at(i).x_ -= 1;
+            }
+        }
+        break;
+    // Move tetromino to the down by SQUARE_SIDE.
+    case Qt::Key_S:
+        for ( unsigned int i = all_square.size() - 2 * SQUARE_NUM;
+              i < all_square.size() - SQUARE_NUM; i++ ){
+            all_square.at(i).y_ += 1;
+        }
+        if ( !check_movable(DOWN) ){
+            for ( unsigned int i = all_square.size() - 2 * SQUARE_NUM;
+                  i < all_square.size() - SQUARE_NUM; i++ ){
+                all_square.at(i).y_ -= 1;
             }
         }
         break;
@@ -240,7 +256,7 @@ void MainWindow::new_tetromino()
     // Check if the game is over or not.
     // If not the next tetromino will fall down automatically.
     // Otherwise, the game is stopped.
-    if ( check_movable(OVERLAP, true) && check_movable(UP) ){
+    if ( check_movable(OVERLAP, false) && check_movable(UP) ){
         score_ += GAIN_SCORE;
         update_gameboard();
     } else {
@@ -293,8 +309,12 @@ void MainWindow::advance_game()
 {
     // The speed of falling will increase ( interval_ decreses
     // by ADVANCE) if the score increases by ADVANCE_SCORE.
-    if ( interval_ > ADVANCE && score_ % ADVANCE_SCORE == 0 ){
+    if ( interval_ > ADVANCE &&
+         ((float(score_) / float(ADVANCE_SCORE)) >= float(level_)) ){
         interval_ -= ADVANCE;
+        // Level increased by 1 and displayed.
+        level_ += 1;
+        ui->levelLcdNumber->display(level_);
     }
 }
 
@@ -326,27 +346,15 @@ bool MainWindow::check_movable(int direct, bool not_rotate)
             for ( unsigned int j = all_square.size() - 2 * SQUARE_NUM;
                   j < all_square.size() - SQUARE_NUM; j++ ){
                 switch (direct) {
-                case LEFT:
-                    if ( all_square.at(j).y_ == all_square.at(i).y_ &&
-                         all_square.at(j).x_ - 1 == all_square.at(i).x_){
-                        return false;
-                    }
-                    break;
-                case RIGHT:
-                    if ( all_square.at(j).y_ == all_square.at(i).y_ &&
-                         all_square.at(j).x_ + 1 == all_square.at(i).x_){
-                        return false;
-                    }
-                    break;
                 case DOWN:
                     if ( all_square.at(j).x_ == all_square.at(i).x_ &&
-                         all_square.at(j).y_ + 1 == all_square.at(i).y_){
+                         all_square.at(j).y_ == all_square.at(i).y_ - 1){
                         return false;
                     }
                     break;
                 // This case UP to check the status of the game.
                 case UP:
-                    if ( all_square.at(i).y_ <= BORDER_UP ){
+                    if ( all_square.at(i).y_ < BORDER_UP ){
                         return is_running_ = false;
                     }
                     break;
@@ -357,8 +365,8 @@ bool MainWindow::check_movable(int direct, bool not_rotate)
                 case OVERLAP:
                     if ( all_square.at(j).x_ == all_square.at(i).x_ &&
                          all_square.at(j).y_ == all_square.at(i).y_){
-                        if ( not_rotate ) return is_running_ = false;
-                        return false;
+                        if ( not_rotate ) return false;
+                        return is_running_ = false;
                     }
                     break;
                 default:
@@ -372,12 +380,12 @@ bool MainWindow::check_movable(int direct, bool not_rotate)
           i < all_square.size() - 4; i++ ){
         switch (direct) {
         case LEFT:
-            if ( all_square.at(i).x_ <= BORDER_LEFT ){
+            if ( all_square.at(i).x_ < BORDER_LEFT ){
                 return false;
             }
             break;
         case RIGHT:
-            if ( all_square.at(i).x_ >= COLUMNS - 1 ){
+            if ( all_square.at(i).x_ >= COLUMNS ){
                 return false;
             }
             break;
@@ -469,9 +477,13 @@ void MainWindow::random_tetromino()
 void MainWindow::on_startButton_clicked()
 {
     timer_.start(interval_);
+    // Game is allowed to run
+    is_running_ = true;
+    level_ = 1;
 
     // Displays the inital score.
     ui->scorelcdNumber->display(score_);
+    ui->levelLcdNumber->display(level_);
 
     score_ += GAIN_SCORE;
     // Random twice  to get the current and the nexr tetromino.
@@ -526,9 +538,12 @@ void MainWindow::on_resetButton_clicked()
     scene_->clear();
     next_scene_->clear();
 
-    // Score will be to zero and displayed
+    // Score will be to zero and displayed.
     score_ = 0;
     ui->scorelcdNumber->display(score_);
+    // Level becomes 1.
+    level_ = 0;
+    ui->levelLcdNumber->display(level_);
     timer_.stop();
 
     // Buttons to choose the difficulty of game are able to toggle.
