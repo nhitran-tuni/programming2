@@ -1,0 +1,65 @@
+Program author
+Name: Thuy Phuong Nhi Tran
+Student number: 291937
+UserID: mpthtr
+E-Mail: thuyphuongnhi.tran@tuni.fi
+
+The game is implemented without any extra Classes.
+One tetrommino is the combination of four squares, the information of each square is stored in a struct.
+
+User interface:
+There are 6 buttons:
+- Start : to start game
+- Pause : to pause game
+- Resume : to resume the game when it is pause
+- Quit : to stop and close the game
+- Reset : to play the game from the beginning when it is still running
+- Restart : to play the game again without starting program again
+There are 2 LcdNumber:
+- Score : gained score
+- Level : when game advances, level increases
+One textBrowser : when game is over, it informs player.
+Three radioButton : to initialize the difficulty of the game when it starts.
+- Easy
+- Medium
+- Hard
+
+Game instruction:
+Initially, the game is implemented for using arrow keys, but without knowing the reasons they do not work.
+How to take action on the  current tetromino:
+A : Move to left by a unit
+S : Move down by a unit (If press and hold S, tetromino will move as down as possible)
+D : Move to the right by a unit
+W : Rotate tetromino
+The game is over when there is not enough space for the next tetromino to be placed or any columns are full.
+
+Before starting the game, player must choose the difficulty of the game by toggling one of three radio button.
+The harder the game, the faster the initial falling speed.
+When the start button is pressed, the game start immediately, game can be pause or reset after starting and resume when it is paused. The game window can be closed by quit button pressed any time.
+Score : +10 when one tetromino is placed successfully. +10 for a row removed oncce .The more rows romoved once, the more scores gained (by multiplication).
+When player reach particular point, falling speed increases and so does level.
+There is the limitation for the falling speed so the limit level for different initial difficulty are different.
+When press the button reset or restart, the difficulty of the game can be changed before presing start button. If player do not toggle any radio button before start button press, the difficulty will be the same as the last game.
+
+Implemented features:
+Minimal required:
+- At start the game area is empty and it simply look like a square
+- There are 7 different kind of tetromino.
+- The game has a game area, where tetrominos fall directly downwards. Tetrominos can fall automatically one after the other.
+- The player can move falling tetrominos horizontally to the left and right. (A fallen or stopped tetromino is not be able to be moved horizontally.)
+- A tetromino stops if it hits the bottom of the game area or an earlier fallen tetromino.
+- When the game is over, the player is informed.
+- The fucntionality of the game has been documented.
+
+Extra:
+1. All seven different tetrominos have been implemented. (5 p.)
+2. A falling tetromino can be turned. (15 p.)
+3. A fallen or stopped tetromino can be moved horizontally, if this is possible and if the next tetromino has not yet appeared in the game area. (10 p.)
+4. Full horizontal rows are removed. (10 p.)
+5. The game counts points. (5 p.)
+6. The game has several difficulty levels. For example, the falling speed may vary. (5 p.)
+7. Tetrominos fall quicker when the game advances. (5 p.)
+8. After the game ends (or anyway), it is possible to start the game again from the beginning without starting the program again. (5 p.)
+9. Besides the falling tetromino, there is also the next coming tetromino visible in the game area. (10 p.)
+10. The falling tetromino can be moved simultaneously as down as possible (with key S). (5 p.)
+

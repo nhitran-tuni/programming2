@@ -18,14 +18,6 @@
 #include <algorithm>
 #include <QKeyEvent>
 
-struct Square
-{
-    QGraphicsRectItem* rect;
-    int x_;
-    int y_;
-    QBrush color;
-};
-
 namespace Ui {
 class MainWindow;
 }
@@ -37,7 +29,10 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+    // Move and rotate the current tetromino with keyboard.
     void keyPressEvent(QKeyEvent* event) override;
+
 
 private slots:
     // To start the game
@@ -105,7 +100,17 @@ private:
     std::default_random_engine randomEng;
     std::uniform_int_distribution<int> distr;
 
-    // More constants, attibutes, and methods
+     // Data structure to store information of squares of tetrominos.
+     // x_ - x-coordinate of the square in play area
+     // y_ - y-coordinate of the square in play area
+     // color - different tetromino shapes have different color
+    struct Square
+    {
+        QGraphicsRectItem* rect;
+        int x_;
+        int y_;
+        QBrush color;
+    };
 
     // QGraphicsScence* for displaying the next random tetromino.
     QGraphicsScene* next_scene_;

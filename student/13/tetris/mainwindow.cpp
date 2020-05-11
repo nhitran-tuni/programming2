@@ -11,8 +11,6 @@
 #include "mainwindow.hh"
 #include "ui_mainwindow.h"
 
-
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -235,7 +233,7 @@ void MainWindow::rotate_current_tet()
     // If the coordiantes of rotated tetronimon overlapping any tetromino
     // the current tetromino change back to original shape.
     if ( !check_movable(LEFT) || !check_movable(RIGHT) ||
-           !check_movable(OVERLAP, false) || !check_movable(DOWN) ||
+           !check_movable(OVERLAP, true) || !check_movable(DOWN) ||
            !check_movable(UP)){
         for ( unsigned int i = all_square.size() - 2 * SQUARE_NUM;
               i < all_square.size() - SQUARE_NUM; i++ ){
@@ -330,7 +328,6 @@ void MainWindow::game_over()
     ui->restartButton->setDisabled(false);
 
     // All other butons are disable when game is over.
-    ui->quitButton->setDisabled(true);
     ui->pauseButton->setDisabled(true);
     ui->resetButton->setDisabled(true);
 }
@@ -564,6 +561,10 @@ void MainWindow::on_restartButton_clicked()
     is_running_ = true;
     // Inform player that tthe game has been start.
     ui->gameStatusTextBrowser->setText("-TETRIS GAME-");
+
+    // RestartButton is disable
+    ui->restartButton->setDisabled(true);
+
     on_resetButton_clicked();
 }
 
